@@ -1,6 +1,6 @@
 WERSJA_GCC := $(shell g++ -dumpversion)
 
-kompiluj_calosc: 
+kompiluj_calosc: main.cpp menu.cpp tablice.cpp menu.h tablice.h
 	#Kompilacja składowych programu do obiektów
 	g++ -c -o "tablice.o" tablice.cpp
 	g++ -c -o "menu.o" menu.cpp
