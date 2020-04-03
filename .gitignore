@@ -1,0 +1,2 @@
+# Wykluczenie półproduktów kompilacji dla wszystkich podfolderów
+*.o
