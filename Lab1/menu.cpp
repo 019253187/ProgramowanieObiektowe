@@ -117,11 +117,15 @@ void uruchomMenu(int* tablica, int* rozmiarTablicy) {
 					*rozmiarTablicy = pobierzLiczbe();
 				}
 				if(tablica != NULL) {
-					delete[] tablica;
+					delete [] tablica;
 				}
 				tablica = utworzTablice(*rozmiarTablicy);
 				break;
 			case 2: {
+				if(tablica == NULL) {
+					wyswietlKomunikat(-1);
+					break;
+				}
 				wyswietlKomunikat(3);
 				int adres = pobierzLiczbe(true, 0, ((*rozmiarTablicy)-1));
 				wyswietlKomunikat(4, adres);
@@ -129,9 +133,13 @@ void uruchomMenu(int* tablica, int* rozmiarTablicy) {
 				zmienKomorke(tablica, *rozmiarTablicy, adres, nowaZawartosc);
 				break;
 			}
-			case 3:
-				wyswietlTablice(tablica, *rozmiarTablicy);
+			case 3:{
+				int zwrot = wyswietlTablice(tablica, *rozmiarTablicy);
+				if(zwrot<0) {
+					wyswietlKomunikat(zwrot);
+				}
 				break;
+			}
 			case 4: {
 				wyswietlKomunikat(5);
 				int nowyRozmiar = pobierzLiczbe();
@@ -148,7 +156,11 @@ void uruchomMenu(int* tablica, int* rozmiarTablicy) {
 				}
 				int* nowa_tablica = NULL;
 				nowa_tablica = zmianaRozmiaru(tablica, *rozmiarTablicy, nowyRozmiar);
-				tablica = nowa_tablica;
+				if(nowa_tablica == NULL) {
+					wyswietlKomunikat(-1);
+				} else {
+					tablica = nowa_tablica;
+				}
 				break;
 			}
 		}
