@@ -71,3 +71,19 @@ int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY) {
 	tablica->rozmiarY = nowyRozmiarY;
 	return 0;
 }
+
+int sumujWiersz(Tablica tablica, int wiersz) {
+	int suma = 0;
+	for(int x=0; x<tablica.rozmiarX; x++) {
+		suma += tablica.tablica[wiersz][x];
+	}
+	return suma;
+}
+
+int sumujKolumne(Tablica tablica, int kolumna) {
+	int suma = 0;
+	for(int y=0; y<tablica.rozmiarY; y++) {
+		suma += tablica.tablica[y][kolumna];
+	}
+	return suma;
+}

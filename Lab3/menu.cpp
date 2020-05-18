@@ -9,7 +9,9 @@ void wyswietlMenu() {
 	cout << "2. Zmien zawartosc komorki tablicy" << endl;
 	cout << "3. Wyswietl tablice" << endl;
 	cout << "4. Zmien rozmiar tablicy" << endl;
-	cout << "5. Zakoncz program" << endl;
+	cout << "5. Zsumuj wedlug wiersza" << endl;
+	cout << "6. Zsumuj wedlug kolumny" << endl;
+	cout << "7. Zakoncz program" << endl;
 
 	cout << "Podaj swoj wybor: ";
 }
@@ -82,6 +84,20 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 		case 10:
 			cout << "Zycze zdrowia." << endl;
 			break;
+		case 15:
+			cout << "Ktory wiersz mam zsumować? ";
+			break;
+		case 16:
+			cout << "Ktora kolumne mam zsumować? ";
+			break;
+		case 25:
+			cout << "Oto suma wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
+		case 26:
+			cout << "Oto suma kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;	
 		default:
 			cout << "Domyslny komunikat" << endl;
 	}
@@ -117,7 +133,7 @@ void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
 	
-	while(wybranaOpcja<5) { 
+	while(wybranaOpcja<7) { 
 		switch(wybranaOpcja) {
 			case 1: {
 				wyswietlKomunikat(11);
@@ -191,9 +207,31 @@ void uruchomMenu(Tablica tablica) {
 				}
 				break;
 			}
+			case 5: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(15);
+				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int suma = sumujWiersz(tablica, adresY);
+				wyswietlKomunikat(25, adresY, suma);
+				break;
+			}
+			case 6: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(16);
+				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int suma = sumujKolumne(tablica, adresX);
+				wyswietlKomunikat(26, adresX, suma);
+				break;
+			}
 		}
 		wyswietlMenu();
-		wybranaOpcja = pobierzLiczbe(true, 1, 5);	
+		wybranaOpcja = pobierzLiczbe(true, 1, 7);	
 	}
 	wyswietlKomunikat(10);
 }

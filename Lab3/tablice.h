@@ -48,5 +48,22 @@ int wyswietlTablice(Tablica tablica);
  */
 int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY);
 
+/**
+ * Zwraca sume wartosci wszystkich komorek danego wiersza.
+ *
+ * @param tablica Tablica robocza
+ * @param wiersz indeks wiersza do zsumowania
+ * @return Suma wartosci w danym wierszu 
+ */
+int sumujWiersz(Tablica tablica, int wiersz);
+
+/**
+ * Zwraca sume wartosci wszystkich komorek danej kolumny.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do zsumowania
+ * @return Suma wartosci w danej kolumnie 
+ */
+int sumujKolumne(Tablica tablica, int kolumna);
 
 #endif
