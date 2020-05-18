@@ -1,5 +1,7 @@
 #ifndef TABLICE_H
 #define TABLICE_H
+
+#include <string>
 /**@struct Tablica
  * @brief Struktura sluzaca do wygodnego przechowywania tablic
  * @var Tablica::tablica
@@ -119,5 +121,21 @@ int maksimumKolumny(Tablica tablica, int kolumna);
  * @return wartosc srednia danej kolumny 
  */
 int sredniaKolumny(Tablica tablica, int kolumna);
+
+/** Zapisuje tablice do pliku o podanej nazwie
+ *
+ * @param tablica Tablica do zapisania
+ * @param nazwaPliku nazwa lub sciezka pliku, w ktorym ma zostac zapisana tablica
+ * @return Kod błędu lub 0 w przypadku powodzenia
+*/
+int zapiszTablice(Tablica tablica, std::string nazwaPliku);
+
+/** Ładuje tablicę do pliku o podanej nazwie
+ *
+ * @param tablica Tablica, ktora ma zostac zainicjalizowana z pliku
+ * @param nazwaPliku nazwa lub sciezka pliku, z ktorego odczytana bedzie tablica
+ * @return Kod błędu lub 0 w przypadku powodzenia
+*/
+int otworzTablice(Tablica tablica, std::string nazwaPliku);
 
 #endif

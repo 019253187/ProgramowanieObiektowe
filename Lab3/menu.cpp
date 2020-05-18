@@ -17,8 +17,10 @@ void wyswietlMenu() {
 	cout << "10. Znajdz maksimum kolumny" << endl;
 	cout << "11. Znajdz srednia wiersza" << endl;
 	cout << "12. Znajdz srednia kolumny" << endl;
+	cout << "13. Zapisz tablice do pliku" << endl;
+	cout << "14. Odczytaj tablice z pliku" << endl;
 
-	cout << "13. Zakoncz program" << endl;
+	cout << "15. Zakoncz program" << endl;
 
 	cout << "Podaj swoj wybor: ";
 }
@@ -129,6 +131,12 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 			cout << "Oto srednia kolumny " << opcjonalnaLiczba1 << ". : ";
 			cout << opcjonalnaLiczba2 << endl;
 			break;
+		case 100:
+			cout << "Podaj nazwe pliku(wraz z rozszerzeniem) do zapisania: ";
+			break; 
+		case 101:
+			cout << "Podaj nazwe pliku(wraz z rozszerzeniem) do otwarcia: ";
+			break; 
 		default:
 			cout << "Domyslny komunikat" << endl;
 	}
@@ -164,7 +172,7 @@ void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
 	
-	while(wybranaOpcja<13) { 
+	while(wybranaOpcja<15) { 
 		switch(wybranaOpcja) {
 			case 1: {
 				wyswietlKomunikat(11);
@@ -326,9 +334,27 @@ void uruchomMenu(Tablica tablica) {
 				wyswietlKomunikat(56, adresX, srednia);
 				break;
 			}
+			case 13: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				string nazwaPliku;
+				wyswietlKomunikat(100);
+				cin >> nazwaPliku;
+				zapiszTablice(tablica, nazwaPliku);
+				break;
+			}
+			case 14: {
+				string nazwaPliku;
+				wyswietlKomunikat(101);
+				cin >> nazwaPliku;
+				otworzTablice(tablica, nazwaPliku);
+				break;
+			}
 		}
 		wyswietlMenu();
-		wybranaOpcja = pobierzLiczbe(true, 1, 13);	
+		wybranaOpcja = pobierzLiczbe(true, 1, 15);	
 	}
 	wyswietlKomunikat(10);
 }

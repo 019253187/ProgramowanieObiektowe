@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -138,4 +140,48 @@ int sredniaKolumny(Tablica tablica, int kolumna) {
 	float srednia = (float)sumujKolumne(tablica, kolumna);
 	srednia /= (float)tablica.rozmiarY;
 	return srednia;
+}
+
+int zapiszTablice(Tablica tablica, string nazwaPliku) {
+	ofstream plik;
+	plik.open(nazwaPliku.c_str()); //Konwersja nazwy pliku na c-string - wymaganie	funkcji open()
+	plik << tablica.rozmiarX << endl << tablica.rozmiarY << endl;
+	for(int y=0; y<tablica.rozmiarY; y++) {
+		for(int x=0; x<tablica.rozmiarX; x++) {
+			plik << tablica.tablica[y][x] << "\t";
+		}
+		plik << endl;
+	}
+	plik.close();
+	return 0;
+}
+
+int otworzTablice(Tablica& tablica, string nazwaPliku) {
+	ifstream dane;
+	dane.open(nazwaPliku.c_str());
+	int odczytano_wierszy = 0;
+	int odczytano_kolumn = 0;
+	if(dane.is_open()) {
+		cout << "Pomyslnie otworzono plik \"" << nazwaPliku << "\"." << endl;
+		dane >> odczytano_wierszy;
+		cout << "Odczytano ilosc wierszy: " << odczytano_wierszy << endl;
+		dane >> odczytano_wierszy;
+		cout << "Odczytano ilosc wierszy: " << odczytano_wierszy << endl;
+		if(!(odczytano_wierszy > 0) || (!(odczytano_kolumn > 0))) {
+			return -1; //Zakonczenie funkcji zwracajac null
+		}
+		utworzTablice(&tablica, odczytano_kolumn, odczytano_wierszy);
+		for(int y=0; y<tablica.rozmiarY; y++) {
+			for(int x=0; x<tablica.rozmiarX; x++) {
+				dane >> tablica.tablica[y][x];
+			}
+		}
+		cout << endl;
+		dane.close();
+		return 0;
+	} else {
+		cout << "Wystapil blad przy otwieraniu pliku \"" << nazwaPliku << "\"." << endl;
+	}
+	dane.close();
+	return -1;
 }
