@@ -87,3 +87,55 @@ int sumujKolumne(Tablica tablica, int kolumna) {
 	}
 	return suma;
 }
+
+int minimumWiersza(Tablica tablica, int wiersz) {
+	int minimum = tablica.tablica[wiersz][0];
+	for(int x=0; x<tablica.rozmiarX; x++) {
+		if(minimum>tablica.tablica[wiersz][x]) {
+			minimum = tablica.tablica[wiersz][x];
+		}
+	}
+	return minimum;
+}
+
+int maksimumWiersza(Tablica tablica, int wiersz) {
+	int maksimum = tablica.tablica[wiersz][0];
+	for(int x=0; x<tablica.rozmiarX; x++) {
+		if(maksimum<tablica.tablica[wiersz][x]) {
+			maksimum = tablica.tablica[wiersz][x];
+		}
+	}
+	return maksimum;
+}
+
+int sredniaWiersza(Tablica tablica, int wiersz) {
+	float srednia = (float)sumujWiersz(tablica, wiersz);
+	srednia /= (float)tablica.rozmiarX;
+	return srednia;
+}
+
+int minimumKolumny(Tablica tablica, int kolumna) {
+	int minimum = tablica.tablica[0][kolumna];
+	for(int y=0; y<tablica.rozmiarY; y++) {
+		if(minimum>tablica.tablica[y][kolumna]) {
+			minimum = tablica.tablica[y][kolumna];
+		}
+	}
+	return minimum;
+}
+
+int maksimumKolumny(Tablica tablica, int kolumna) {
+	int maksimum = tablica.tablica[0][kolumna];
+	for(int y=0; y<tablica.rozmiarY; y++) {
+		if(maksimum<tablica.tablica[y][kolumna]) {
+			maksimum = tablica.tablica[y][kolumna];
+		}
+	}
+	return maksimum;
+}
+
+int sredniaKolumny(Tablica tablica, int kolumna) {
+	float srednia = (float)sumujKolumne(tablica, kolumna);
+	srednia /= (float)tablica.rozmiarY;
+	return srednia;
+}

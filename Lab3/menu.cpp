@@ -11,7 +11,14 @@ void wyswietlMenu() {
 	cout << "4. Zmien rozmiar tablicy" << endl;
 	cout << "5. Zsumuj wedlug wiersza" << endl;
 	cout << "6. Zsumuj wedlug kolumny" << endl;
-	cout << "7. Zakoncz program" << endl;
+	cout << "7. Znajdz minimum wiersza" << endl;
+	cout << "8. Znajdz minimum kolumny" << endl;
+	cout << "9. Znajdz maksimum wiersza" << endl;
+	cout << "10. Znajdz maksimum kolumny" << endl;
+	cout << "11. Znajdz srednia wiersza" << endl;
+	cout << "12. Znajdz srednia kolumny" << endl;
+
+	cout << "13. Zakoncz program" << endl;
 
 	cout << "Podaj swoj wybor: ";
 }
@@ -85,10 +92,10 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 			cout << "Zycze zdrowia." << endl;
 			break;
 		case 15:
-			cout << "Ktory wiersz mam zsumować? ";
+			cout << "Ktory wiersz? ";
 			break;
 		case 16:
-			cout << "Ktora kolumne mam zsumować? ";
+			cout << "Ktora kolumna? ";
 			break;
 		case 25:
 			cout << "Oto suma wiersza " << opcjonalnaLiczba1 << ". : ";
@@ -97,7 +104,31 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 		case 26:
 			cout << "Oto suma kolumny " << opcjonalnaLiczba1 << ". : ";
 			cout << opcjonalnaLiczba2 << endl;
-			break;	
+			break;
+		case 35:
+			cout << "Oto minimum wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
+		case 36:
+			cout << "Oto minimum kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
+		case 45:
+			cout << "Oto maksimum wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
+		case 46:
+			cout << "Oto maksimum kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
+		case 55:
+			cout << "Oto srednia wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
+		case 56:
+			cout << "Oto srednia kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba2 << endl;
+			break;
 		default:
 			cout << "Domyslny komunikat" << endl;
 	}
@@ -133,7 +164,7 @@ void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
 	
-	while(wybranaOpcja<7) { 
+	while(wybranaOpcja<13) { 
 		switch(wybranaOpcja) {
 			case 1: {
 				wyswietlKomunikat(11);
@@ -229,9 +260,75 @@ void uruchomMenu(Tablica tablica) {
 				wyswietlKomunikat(26, adresX, suma);
 				break;
 			}
+			case 7: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(15);
+				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int suma = minimumWiersza(tablica, adresY);
+				wyswietlKomunikat(35, adresY, suma);
+				break;
+			}
+			case 8: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(16);
+				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int suma = minimumKolumny(tablica, adresX);
+				wyswietlKomunikat(36, adresX, suma);
+				break;
+			}
+			case 9: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(15);
+				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int suma = maksimumWiersza(tablica, adresY);
+				wyswietlKomunikat(45, adresY, suma);
+				break;
+			}
+			case 10: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(16);
+				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int suma = maksimumKolumny(tablica, adresX);
+				wyswietlKomunikat(46, adresX, suma);
+				break;
+			}
+			case 11: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(15);
+				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				float srednia = sredniaWiersza(tablica, adresY);
+				wyswietlKomunikat(55, adresY, srednia);
+				break;
+			}
+			case 12: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
+				wyswietlKomunikat(16);
+				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				float srednia = sredniaKolumny(tablica, adresX);
+				wyswietlKomunikat(56, adresX, srednia);
+				break;
+			}
 		}
 		wyswietlMenu();
-		wybranaOpcja = pobierzLiczbe(true, 1, 7);	
+		wybranaOpcja = pobierzLiczbe(true, 1, 13);	
 	}
 	wyswietlKomunikat(10);
 }

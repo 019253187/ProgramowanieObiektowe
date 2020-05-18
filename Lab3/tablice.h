@@ -66,4 +66,58 @@ int sumujWiersz(Tablica tablica, int wiersz);
  */
 int sumujKolumne(Tablica tablica, int kolumna);
 
+/**
+ * Zwraca najmniejsza wartosc ze wszystkich komorek danego wiersza.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do przeszukania
+ * @return Najmniejsza wartosc w danym wierszu 
+ */
+int minimumWiersza(Tablica tablica, int kolumna);
+
+/**
+ * Zwraca najwieksza wartosc ze wszystkich komorek danego wiersza.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do przeszukania
+ * @return Najwieksza wartosc w danym wierszu 
+ */
+int maksimumWiersza(Tablica tablica, int kolumna);
+
+/**
+ * Zwraca wartosc srednia wszystkich komorek danego wiersza.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do przeszukania
+ * @return wartosc srednia danego wiersza 
+ */
+int sredniaWiersza(Tablica tablica, int kolumna);
+
+/**
+ * Zwraca najmniejsza wartosc ze wszystkich komorek danej kolumny.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do przeszukania
+ * @return Najmniejsza wartosc w danej kolumnie 
+ */
+int minimumKolumny(Tablica tablica, int kolumna);
+
+/**
+ * Zwraca najwieksza wartosc ze wszystkich komorek danej kolumny.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do przeszukania
+ * @return Najwieksza wartosc w danej kolumnie 
+ */
+int maksimumKolumny(Tablica tablica, int kolumna);
+
+/**
+ * Zwraca wartosc srednia wszystkich komorek danej kolumny.
+ *
+ * @param tablica Tablica robocza
+ * @param kolumna indeks kolumny do przeszukania
+ * @return wartosc srednia danej kolumny 
+ */
+int sredniaKolumny(Tablica tablica, int kolumna);
+
 #endif
