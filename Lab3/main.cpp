@@ -5,10 +5,7 @@
 using namespace std;
 
 int main() {
-	int* tablica = NULL;
-	int  rozmiarTablicy = 0;
-	uruchomMenu(tablica, &rozmiarTablicy);
-	
-	if(tablica != NULL) delete [] tablica;
+	Tablica tablica;
+	uruchomMenu(tablica);
 	return 0;
 }

@@ -1,31 +1,52 @@
 #ifndef TABLICE_H
 #define TABLICE_H
-
-int* utworzTablice(int rozmiarTablicy);
+/**@struct Tablica
+ * @brief Struktura sluzaca do wygodnego przechowywania tablic
+ * @var Tablica::tablica
+ * Wlasciwa, dwuwymiarowa tablica typu int(wskaznik wskaznika)
+ * @var Tablica::rozmiarX
+ * Ilosc komorek w kazdym wierszu tablicy
+ * @var Tablica::rozmiarY
+ * Ilosc wierszy w calej tablicy
+ */
+struct Tablica {
+	int** tablica;
+	int rozmiarX;
+	int rozmiarY;
+};
+/** Inicjalizuje nowa tablice 2D o podanych wymiarach
+ *
+ * @param tablica Wskaznik do tablicy do zainicjalizowania
+ * @param rozmiarX ilosc kolumn w danym wierszu
+ * @param rozmiarY ilosc wierszy
+ * @return obiekt typu Tablica ze wszystkimi komorkami rownymi 0
+*/
+int utworzTablice(Tablica* tablica, int rozmiarX, int rozmiarY);
 
 /**
  * Zmienia zawartosc wybranej komorki w tablicy.
  *
- * @param tablica Wskaznik do poczatku tablicy intow, ktorej komorke chcemy zmodyfikowac
- * @param rozmiarTablicy Calkowita ilosc elementow danej tablicy
- * @param ktoraKomorka Indeks komorki, ktora ma zostac zmieniona (liczony od 0)
+ * @param tablica Modyfikowana tablica
+ * @param xKomorki Współrzędna X(kolumna) komórki do zmodyfikowania 
+ * @param yKomorki Współrzędna Y(wiersz) komórki do zmodyfikowania 
  * @param nowaZawartosc Docelowa zawartosc modyfikowanej komorki
  * @return Kod błędu lub 0 w przypadku powodzenia
  */
-int zmienKomorke(int* tablica, int rozmiarTablicy, int ktoraKomorka, int nowaZawartosc);
+int zmienKomorke(Tablica tablica, int xKomorki, int yKomorki, int nowaZawartosc);
 
-int wyswietlTablice(int* tablica, int rozmiarTablicy);
+int wyswietlTablice(Tablica tablica);
 
 /**
  * Tworzy nowa tablice o podanym rozmiarze i kopiuje zawartosc starej tablicy
  * do nowej na tyle, na ile to mozliwe. Komorki ponad rozmiar starej tablicy sa
  * inicjalizowane jako "0". Stara tablica jest usuwana.
  *
- * @param tablica Wskaznik do poczatku tablicy intow, ktorej rozmiar chcemy zmienic
- * @param rozmiarTablicy Dotychczasowy, stary rozmiar tablicy "tablica"
- * @param nowyRozmiarTablicy Rozmiar nowej tablicy
- * @return Wskaznik do nowej tablicy lub NULL w przypadku błędu
+ * @param Tablica Wskaznik do tablicy, ktorej rozmiar ma zostac zmieniony
+ * @param nowyRozmiarX Ilosc kolumn w nowej tablicy
+ * @param nowyRozmiarY Ilosc wierszy w nowej tablicy
+ * @return Kod błędu lub 0 w przypadku błędu
  */
-int* zmianaRozmiaru(int* tablica, int& rozmiarTablicy, int nowyRozmiarTablicy);
+int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY);
+
 
 #endif

@@ -1,5 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
+#include "tablice.h"
 
 void wyswietlMenu();
 /**
@@ -28,10 +29,9 @@ int pobierzLiczbe(bool ograniczona, int zakresMin, int zakresMax);
 /**
  * Glowna funkcja do uruchamiania menu.
  * 
- * @param tablica Wskaznik do tablicy roboczej
- * @param rozmiarTablicy Wskaznik na int z rozmiarem tablicy roboczej
+ * @param tablica Tablica robocza
  */
 
-void uruchomMenu(int* tablica, int* rozmiarTablicy);
+void uruchomMenu(Tablica tablica);
 
 #endif

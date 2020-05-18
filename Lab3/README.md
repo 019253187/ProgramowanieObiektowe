@@ -4,3 +4,5 @@ Glowne zmiany:
 -przejscie na dwuwymiarowe tablice
 -przejscie na strukture
 -wspolpraca z plikami(odczyt/zapis)
+
+Nota: Program oparty o C++11

@@ -2,59 +2,72 @@
 
 using namespace std;
 
-int* utworzTablice(int rozmiarTablicy) {
-	int* tabelka = new int[rozmiarTablicy];
-	return tabelka;
+struct Tablica {
+	int** tablica = NULL;
+	int rozmiarX = 0;
+	int rozmiarY = 0;
+};
+
+int utworzTablice(Tablica* tabelka, int rozmiarX, int rozmiarY) {
+	tabelka->rozmiarX = rozmiarX;
+	tabelka->rozmiarY = rozmiarY;
+	tabelka->tablica = new int*[rozmiarY];
+	for(int y=0; y<tabelka->rozmiarY; y++) {
+		tabelka->tablica[y] = new int[rozmiarX];
+		for(int x=0; x<tabelka->rozmiarX; x++) {
+			tabelka->tablica[y][x] = 0;
+		}
+	}
+	return 0;
 }
 
-int zmienKomorke(int* tablica, int rozmiarTablicy, int ktoraKomorka, int nowaZawartosc) {
-	if(tablica == NULL) {
+int zmienKomorke(Tablica tablica, int xKomorki, int yKomorki, int nowaZawartosc) {
+	if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
 		return -1;
 	}
-	if(ktoraKomorka<0) {
+	if(xKomorki<0 || yKomorki<0) {
 		return -2;
 	}
-	if(ktoraKomorka>=rozmiarTablicy) {
+	if(yKomorki>=tablica.rozmiarY || xKomorki>=tablica.rozmiarX) {
 		return -3;
 	}
 
-	tablica[ktoraKomorka] = nowaZawartosc;
+	tablica.tablica[yKomorki][xKomorki] = nowaZawartosc;
 	return 0;
 }
 
-int wyswietlTablice(int* tablica, int rozmiarTablicy) {
-	if(tablica == NULL) {
+int wyswietlTablice(Tablica tablica) {
+	if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {			
 		return -1;
 	}
-	cout << "Oto twoja tablica o rozmiarze " << rozmiarTablicy <<":" << endl;
-	for(int i = 0; i<rozmiarTablicy; i++) {
-		cout << tablica[i] << endl;
+	cout << "Oto twoja tablica o rozmiarze ";
+	cout << tablica.rozmiarX << " kolumn na  "; 
+	cout << tablica.rozmiarY << " wierszy:" << endl;
+	for(int y=0; y<tablica.rozmiarY; y++) {
+		for(int x=0; x<tablica.rozmiarX; x++) {
+			cout << tablica.tablica[y][x] << "\t";
+		}
+		cout << endl;
 	}
 	return 0;
 }
 
-int* zmianaRozmiaru(int* tablica, int& rozmiarTablicy, int nowyRozmiarTablicy) {
-	if(tablica == NULL) {
-		return NULL;
+int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY) {
+	if(tablica->rozmiarX<=0 || tablica->rozmiarY<=0) {
+		return -1;
 	}
-	int* tabelka = NULL;
-	tabelka = new int[nowyRozmiarTablicy];
-	if(nowyRozmiarTablicy<rozmiarTablicy) {
-		for(int i = 0; i < nowyRozmiarTablicy; i++) {
-			tabelka[i] = tablica[i];
-		}
-	} else if(nowyRozmiarTablicy == rozmiarTablicy) {
-		tabelka = tablica;
-	} else {
-		for(int i = 0; i < rozmiarTablicy; i++) {
-			tabelka[i] = tablica[i];
-		}
-		for(int i = rozmiarTablicy; i < nowyRozmiarTablicy; i++) {
-			tabelka[i] = 0;
+	Tablica tabelka;
+	utworzTablice(&tabelka, nowyRozmiarX, nowyRozmiarY);
+	for(int y=0; y<nowyRozmiarY; y++) {
+		for(int x=0; x<nowyRozmiarX; x++) {
+			if(x<(tablica->rozmiarX)) {
+				tabelka.tablica[y][x] = ((tablica->tablica)[y][x]);
+			}
 		}
 	}
-	rozmiarTablicy = nowyRozmiarTablicy;
-	
-	delete [] tablica;
-	return tabelka;
+	//Wywala segfault przy powiekszaniu tablicy
+	tablica->tablica = tabelka.tablica;
+	tablica->rozmiarX = nowyRozmiarX;
+	tablica->rozmiarY = nowyRozmiarY;
+	return 0;
 }

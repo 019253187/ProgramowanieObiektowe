@@ -41,20 +41,30 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 			cout << endl;
 			break;
 		case 1:
-			cout << "Podaj rozmiar tworzonej tablicy: ";
+			cout << "Podaj rozmiar X (ilosc kolumn) tworzonej tablicy: ";
+			break;
+		case 11:
+			cout << "Podaj rozmiar Y (ilosc wierszy) tworzonej tablicy: ";
 			break;
 		case 2:
 			cout << "Utworzylem tablice o rozmiarze " << opcjonalnaLiczba1 << endl;
 			break;
 		case 3:
 			cout << "Elementy tablicy sa numerowane od 0." << endl;
-			cout << "Ktory element tablicy chcesz zmienic? ";
+			cout << "Podaj wspolrzedna X komorki, ktora chcesz zmienic: ";
+			break;
+		case 31:
+			cout << "Podaj wspolrzedna Y komorki, ktora chcesz zmienic: ";
 			break;
 		case 4:
-			cout << "Podaj nowa zawartosc elementu " << opcjonalnaLiczba1 << ".: ";
+			cout << "Podaj nowa zawartosc elementu (" << opcjonalnaLiczba1;
+			cout << "," << opcjonalnaLiczba2 << "): ";
 			break;
 		case 5:
-			cout << "Podaj nowy rozmiar tablicy: ";
+			cout << "Podaj nowy rozmiar X tablicy: ";
+			break;
+		case 51:
+			cout << "Podaj nowy rozmiar Y tablicy: ";
 			break;
 		case 6:
 			cout << "UWAGA! Nowy rozmiar tablicy jest mniejszy od starego." << endl;
@@ -103,63 +113,81 @@ int pobierzLiczbe(bool ograniczona = false, int zakresMin = 0, int zakresMax = 1
 	return pobranaLiczba;
 }
 
-void uruchomMenu(int* tablica, int* rozmiarTablicy) {
+void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
 	
 	while(wybranaOpcja<5) { 
 		switch(wybranaOpcja) {
-			case 1:
-				wyswietlKomunikat(1);
-				*rozmiarTablicy = pobierzLiczbe();
-				while(*rozmiarTablicy<=0) {
+			case 1: {
+				wyswietlKomunikat(11);
+				int nowyRozmiarY = pobierzLiczbe();
+				while(nowyRozmiarY<=0) {
 					wyswietlKomunikat(-6);
-					*rozmiarTablicy = pobierzLiczbe();
+					nowyRozmiarY = pobierzLiczbe();
 				}
-				if(tablica != NULL) {
-					delete [] tablica;
+
+				wyswietlKomunikat(1);
+				int nowyRozmiarX = pobierzLiczbe();
+				while(nowyRozmiarX<=0) {
+					wyswietlKomunikat(-6);
+					nowyRozmiarX = pobierzLiczbe();
 				}
-				tablica = utworzTablice(*rozmiarTablicy);
+/*
+				if(tablica.tablica != NULL) {
+					delete [] tablica.tablica;
+				}*/
+				Tablica* naszaTablica = &tablica;
+				utworzTablice(naszaTablica, nowyRozmiarX, nowyRozmiarY);
 				break;
+			}
 			case 2: {
-				if(tablica == NULL) {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
 					wyswietlKomunikat(-1);
 					break;
 				}
 				wyswietlKomunikat(3);
-				int adres = pobierzLiczbe(true, 0, ((*rozmiarTablicy)-1));
-				wyswietlKomunikat(4, adres);
+				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				wyswietlKomunikat(31);
+				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+
+				wyswietlKomunikat(4, adresX, adresY);
 				int nowaZawartosc = pobierzLiczbe();
-				zmienKomorke(tablica, *rozmiarTablicy, adres, nowaZawartosc);
+				zmienKomorke(tablica, adresX, adresY, nowaZawartosc);
 				break;
 			}
 			case 3:{
-				int zwrot = wyswietlTablice(tablica, *rozmiarTablicy);
+				int zwrot = wyswietlTablice(tablica);
 				if(zwrot<0) {
 					wyswietlKomunikat(zwrot);
 				}
 				break;
 			}
 			case 4: {
-				wyswietlKomunikat(5);
-				int nowyRozmiar = pobierzLiczbe();
-				while(nowyRozmiar<=0) {
+				wyswietlKomunikat(51);
+				int nowyRozmiarY = pobierzLiczbe();
+				while(nowyRozmiarY<=0) {
 					wyswietlKomunikat(-6);
-					nowyRozmiar = pobierzLiczbe();
+					nowyRozmiarY = pobierzLiczbe();
 				}
-				if(nowyRozmiar<(*rozmiarTablicy)) {
+
+				wyswietlKomunikat(5);
+				int nowyRozmiarX = pobierzLiczbe();
+				while(nowyRozmiarX<=0) {
+					wyswietlKomunikat(-6);
+					nowyRozmiarX = pobierzLiczbe();
+				}
+				/*if(nowyRozmiar<(*rozmiarTablicy)) {
 					wyswietlKomunikat(6, nowyRozmiar, *rozmiarTablicy);
 				} else if(nowyRozmiar == (*rozmiarTablicy)) {
 					wyswietlKomunikat(7);
 				} else {
 					wyswietlKomunikat(8, *rozmiarTablicy);
-				}
-				int* nowa_tablica = NULL;
-				nowa_tablica = zmianaRozmiaru(tablica, *rozmiarTablicy, nowyRozmiar);
-				if(nowa_tablica == NULL) {
-					wyswietlKomunikat(-1);
-				} else {
-					tablica = nowa_tablica;
+				}*/
+				Tablica* naszaTablica = &tablica;
+				int zwrot = zmianaRozmiaru(naszaTablica, nowyRozmiarX, nowyRozmiarY);
+				if(zwrot) {
+					wyswietlKomunikat(zwrot);
 				}
 				break;
 			}
