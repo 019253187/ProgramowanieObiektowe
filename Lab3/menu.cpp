@@ -212,7 +212,8 @@ void uruchomMenu(Tablica tablica) {
 				break;
 			}
 			case 3:{
-				int zwrot = wyswietlTablice(tablica);
+				Tablica* naszaTablica = &tablica;
+				int zwrot = wyswietlTablice(naszaTablica);
 				if(zwrot<0) {
 					wyswietlKomunikat(zwrot);
 				}

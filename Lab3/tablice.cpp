@@ -14,9 +14,9 @@ int utworzTablice(Tablica* tabelka, int rozmiarX, int rozmiarY) {
 	tabelka->rozmiarX = rozmiarX;
 	tabelka->rozmiarY = rozmiarY;
 	tabelka->tablica = new int*[rozmiarY];
-	for(int y=0; y<tabelka->rozmiarY; y++) {
+	for(int y=0; y<(tabelka->rozmiarY); y++) {
 		tabelka->tablica[y] = new int[rozmiarX];
-		for(int x=0; x<tabelka->rozmiarX; x++) {
+		for(int x=0; x<(tabelka->rozmiarX); x++) {
 			tabelka->tablica[y][x] = 0;
 		}
 	}
@@ -38,16 +38,16 @@ int zmienKomorke(Tablica tablica, int xKomorki, int yKomorki, int nowaZawartosc)
 	return 0;
 }
 
-int wyswietlTablice(Tablica tablica) {
-	if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {			
+int wyswietlTablice(Tablica* tablica) {
+	if(tablica->rozmiarX<=0 || tablica->rozmiarY<=0) {			
 		return -1;
 	}
 	cout << "Oto twoja tablica o rozmiarze ";
-	cout << tablica.rozmiarX << " kolumn na  "; 
-	cout << tablica.rozmiarY << " wierszy:" << endl;
-	for(int y=0; y<tablica.rozmiarY; y++) {
-		for(int x=0; x<tablica.rozmiarX; x++) {
-			cout << tablica.tablica[y][x] << "\t";
+	cout << tablica->rozmiarX << " kolumn na  "; 
+	cout << tablica->rozmiarY << " wierszy:" << endl;
+	for(int y=0; y<tablica->rozmiarY; y++) {
+		for(int x=0; x<tablica->rozmiarX; x++) {
+			cout << tablica->tablica[y][x] << "\t";
 		}
 		cout << endl;
 	}
@@ -61,16 +61,19 @@ int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY) {
 	Tablica tabelka;
 	utworzTablice(&tabelka, nowyRozmiarX, nowyRozmiarY);
 	for(int y=0; y<nowyRozmiarY; y++) {
-		for(int x=0; x<nowyRozmiarX; x++) {
-			if(x<(tablica->rozmiarX)) {
-				tabelka.tablica[y][x] = ((tablica->tablica)[y][x]);
+		if(y<(tablica->rozmiarY)) { //Zapobieżenie segfault(odczyt spoza tablicy)
+			for(int x=0; x<nowyRozmiarX; x++) {
+				if(x<(tablica->rozmiarX)) {
+					tabelka.tablica[y][x] = ((tablica->tablica)[y][x]);
+				}
 			}
 		}
 	}
-	//Wywala segfault przy powiekszaniu tablicy
+	delete [] tablica -> tablica;
 	tablica->tablica = tabelka.tablica;
 	tablica->rozmiarX = nowyRozmiarX;
 	tablica->rozmiarY = nowyRozmiarY;
+	delete [] tabelka.tablica;
 	return 0;
 }
 

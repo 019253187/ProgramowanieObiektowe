@@ -36,7 +36,7 @@ int utworzTablice(Tablica* tablica, int rozmiarX, int rozmiarY);
  */
 int zmienKomorke(Tablica tablica, int xKomorki, int yKomorki, int nowaZawartosc);
 
-int wyswietlTablice(Tablica tablica);
+int wyswietlTablice(Tablica* tablica);
 
 /**
  * Tworzy nowa tablice o podanym rozmiarze i kopiuje zawartosc starej tablicy
@@ -136,6 +136,6 @@ int zapiszTablice(Tablica tablica, std::string nazwaPliku);
  * @param nazwaPliku nazwa lub sciezka pliku, z ktorego odczytana bedzie tablica
  * @return Kod błędu lub 0 w przypadku powodzenia
 */
-int otworzTablice(Tablica tablica, std::string nazwaPliku);
+int otworzTablice(Tablica& tablica, std::string nazwaPliku);
 
 #endif
