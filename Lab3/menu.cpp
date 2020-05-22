@@ -192,8 +192,7 @@ void uruchomMenu(Tablica tablica) {
 				if(tablica.tablica != NULL) {
 					delete [] tablica.tablica;
 				}*/
-				Tablica* naszaTablica = &tablica;
-				utworzTablice(naszaTablica, nowyRozmiarX, nowyRozmiarY);
+				tablica.utworzTablice(nowyRozmiarX, nowyRozmiarY);
 				break;
 			}
 			case 2: {
@@ -208,12 +207,11 @@ void uruchomMenu(Tablica tablica) {
 
 				wyswietlKomunikat(4, adresX, adresY);
 				int nowaZawartosc = pobierzLiczbe();
-				zmienKomorke(tablica, adresX, adresY, nowaZawartosc);
+				tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
 				break;
 			}
 			case 3:{
-				Tablica* naszaTablica = &tablica;
-				int zwrot = wyswietlTablice(naszaTablica);
+				int zwrot = tablica.wyswietlTablice();
 				if(zwrot<0) {
 					wyswietlKomunikat(zwrot);
 				}
@@ -240,8 +238,7 @@ void uruchomMenu(Tablica tablica) {
 				} else {
 					wyswietlKomunikat(8, *rozmiarTablicy);
 				}*/
-				Tablica* naszaTablica = &tablica;
-				int zwrot = zmianaRozmiaru(naszaTablica, nowyRozmiarX, nowyRozmiarY);
+				int zwrot = tablica.zmianaRozmiaru(nowyRozmiarX, nowyRozmiarY);
 				if(zwrot) {
 					wyswietlKomunikat(zwrot);
 				}
@@ -254,7 +251,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				int suma = sumujWiersz(tablica, adresY);
+				int suma = tablica.sumujWiersz(adresY);
 				wyswietlKomunikat(25, adresY, suma);
 				break;
 			}
@@ -265,7 +262,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				int suma = sumujKolumne(tablica, adresX);
+				int suma = tablica.sumujKolumne(adresX);
 				wyswietlKomunikat(26, adresX, suma);
 				break;
 			}
@@ -276,7 +273,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				int suma = minimumWiersza(tablica, adresY);
+				int suma = tablica.minimumWiersza(adresY);
 				wyswietlKomunikat(35, adresY, suma);
 				break;
 			}
@@ -287,7 +284,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				int suma = minimumKolumny(tablica, adresX);
+				int suma = tablica.minimumKolumny(adresX);
 				wyswietlKomunikat(36, adresX, suma);
 				break;
 			}
@@ -298,7 +295,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				int suma = maksimumWiersza(tablica, adresY);
+				int suma = tablica.maksimumWiersza(adresY);
 				wyswietlKomunikat(45, adresY, suma);
 				break;
 			}
@@ -309,7 +306,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				int suma = maksimumKolumny(tablica, adresX);
+				int suma = tablica.maksimumKolumny(adresX);
 				wyswietlKomunikat(46, adresX, suma);
 				break;
 			}
@@ -320,7 +317,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				float srednia = sredniaWiersza(tablica, adresY);
+				float srednia = tablica.sredniaWiersza(adresY);
 				wyswietlKomunikat(55, adresY, srednia);
 				break;
 			}
@@ -331,7 +328,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				float srednia = sredniaKolumny(tablica, adresX);
+				float srednia = tablica.sredniaKolumny(adresX);
 				wyswietlKomunikat(56, adresX, srednia);
 				break;
 			}
@@ -343,14 +340,14 @@ void uruchomMenu(Tablica tablica) {
 				string nazwaPliku;
 				wyswietlKomunikat(100);
 				cin >> nazwaPliku;
-				zapiszTablice(tablica, nazwaPliku);
+				tablica.zapiszTablice(nazwaPliku);
 				break;
 			}
 			case 14: {
 				string nazwaPliku;
 				wyswietlKomunikat(101);
 				cin >> nazwaPliku;
-				otworzTablice(tablica, nazwaPliku);
+				tablica.otworzTablice(nazwaPliku);
 				break;
 			}
 		}

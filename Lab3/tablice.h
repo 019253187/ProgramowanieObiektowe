@@ -2,7 +2,7 @@
 #define TABLICE_H
 
 #include <string>
-/**@struct Tablica
+/**@class Tablica
  * @brief Struktura sluzaca do wygodnego przechowywania tablic
  * @var Tablica::tablica
  * Wlasciwa, dwuwymiarowa tablica typu int(wskaznik wskaznika)
@@ -11,11 +11,11 @@
  * @var Tablica::rozmiarY
  * Ilosc wierszy w calej tablicy
  */
-struct Tablica {
+class Tablica {
+public:
 	int** tablica;
 	int rozmiarX;
 	int rozmiarY;
-};
 /** Inicjalizuje nowa tablice 2D o podanych wymiarach
  *
  * @param tablica Wskaznik do tablicy do zainicjalizowania
@@ -23,7 +23,7 @@ struct Tablica {
  * @param rozmiarY ilosc wierszy
  * @return obiekt typu Tablica ze wszystkimi komorkami rownymi 0
 */
-int utworzTablice(Tablica* tablica, int rozmiarX, int rozmiarY);
+int utworzTablice(int rozmiarX, int rozmiarY);
 
 /**
  * Zmienia zawartosc wybranej komorki w tablicy.
@@ -34,9 +34,9 @@ int utworzTablice(Tablica* tablica, int rozmiarX, int rozmiarY);
  * @param nowaZawartosc Docelowa zawartosc modyfikowanej komorki
  * @return Kod błędu lub 0 w przypadku powodzenia
  */
-int zmienKomorke(Tablica tablica, int xKomorki, int yKomorki, int nowaZawartosc);
+int zmienKomorke(int xKomorki, int yKomorki, int nowaZawartosc);
 
-int wyswietlTablice(Tablica* tablica);
+int wyswietlTablice(void);
 
 /**
  * Tworzy nowa tablice o podanym rozmiarze i kopiuje zawartosc starej tablicy
@@ -48,7 +48,7 @@ int wyswietlTablice(Tablica* tablica);
  * @param nowyRozmiarY Ilosc wierszy w nowej tablicy
  * @return Kod błędu lub 0 w przypadku błędu
  */
-int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY);
+int zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY);
 
 /**
  * Zwraca sume wartosci wszystkich komorek danego wiersza.
@@ -57,7 +57,7 @@ int zmianaRozmiaru(Tablica* tablica, int nowyRozmiarX, int nowyRozmiarY);
  * @param wiersz indeks wiersza do zsumowania
  * @return Suma wartosci w danym wierszu 
  */
-int sumujWiersz(Tablica tablica, int wiersz);
+int sumujWiersz(int wiersz);
 
 /**
  * Zwraca sume wartosci wszystkich komorek danej kolumny.
@@ -66,7 +66,7 @@ int sumujWiersz(Tablica tablica, int wiersz);
  * @param kolumna indeks kolumny do zsumowania
  * @return Suma wartosci w danej kolumnie 
  */
-int sumujKolumne(Tablica tablica, int kolumna);
+int sumujKolumne(int kolumna);
 
 /**
  * Zwraca najmniejsza wartosc ze wszystkich komorek danego wiersza.
@@ -75,7 +75,7 @@ int sumujKolumne(Tablica tablica, int kolumna);
  * @param kolumna indeks kolumny do przeszukania
  * @return Najmniejsza wartosc w danym wierszu 
  */
-int minimumWiersza(Tablica tablica, int kolumna);
+int minimumWiersza(int kolumna);
 
 /**
  * Zwraca najwieksza wartosc ze wszystkich komorek danego wiersza.
@@ -84,7 +84,7 @@ int minimumWiersza(Tablica tablica, int kolumna);
  * @param kolumna indeks kolumny do przeszukania
  * @return Najwieksza wartosc w danym wierszu 
  */
-int maksimumWiersza(Tablica tablica, int kolumna);
+int maksimumWiersza(int kolumna);
 
 /**
  * Zwraca wartosc srednia wszystkich komorek danego wiersza.
@@ -93,7 +93,7 @@ int maksimumWiersza(Tablica tablica, int kolumna);
  * @param kolumna indeks kolumny do przeszukania
  * @return wartosc srednia danego wiersza 
  */
-int sredniaWiersza(Tablica tablica, int kolumna);
+int sredniaWiersza(int kolumna);
 
 /**
  * Zwraca najmniejsza wartosc ze wszystkich komorek danej kolumny.
@@ -102,7 +102,7 @@ int sredniaWiersza(Tablica tablica, int kolumna);
  * @param kolumna indeks kolumny do przeszukania
  * @return Najmniejsza wartosc w danej kolumnie 
  */
-int minimumKolumny(Tablica tablica, int kolumna);
+int minimumKolumny(int kolumna);
 
 /**
  * Zwraca najwieksza wartosc ze wszystkich komorek danej kolumny.
@@ -111,7 +111,7 @@ int minimumKolumny(Tablica tablica, int kolumna);
  * @param kolumna indeks kolumny do przeszukania
  * @return Najwieksza wartosc w danej kolumnie 
  */
-int maksimumKolumny(Tablica tablica, int kolumna);
+int maksimumKolumny(int kolumna);
 
 /**
  * Zwraca wartosc srednia wszystkich komorek danej kolumny.
@@ -120,7 +120,7 @@ int maksimumKolumny(Tablica tablica, int kolumna);
  * @param kolumna indeks kolumny do przeszukania
  * @return wartosc srednia danej kolumny 
  */
-int sredniaKolumny(Tablica tablica, int kolumna);
+int sredniaKolumny(int kolumna);
 
 /** Zapisuje tablice do pliku o podanej nazwie
  *
@@ -128,7 +128,7 @@ int sredniaKolumny(Tablica tablica, int kolumna);
  * @param nazwaPliku nazwa lub sciezka pliku, w ktorym ma zostac zapisana tablica
  * @return Kod błędu lub 0 w przypadku powodzenia
 */
-int zapiszTablice(Tablica tablica, std::string nazwaPliku);
+int zapiszTablice(std::string nazwaPliku);
 
 /** Ładuje tablicę do pliku o podanej nazwie
  *
@@ -136,6 +136,6 @@ int zapiszTablice(Tablica tablica, std::string nazwaPliku);
  * @param nazwaPliku nazwa lub sciezka pliku, z ktorego odczytana bedzie tablica
  * @return Kod błędu lub 0 w przypadku powodzenia
 */
-int otworzTablice(Tablica& tablica, std::string nazwaPliku);
-
+int otworzTablice(std::string nazwaPliku);
+};
 #endif
