@@ -7,9 +7,8 @@ kompiluj_calosc: main.cpp menu.cpp tablice.cpp menu.h tablice.h
 	g++ -std=c++11 -c -o "main.o" main.cpp
 	#Linkowanie
 	@echo Twoja wersja gcc to ${WERSJA_GCC}
-	g++ -std=c++11 *.cpp -o calosc 
-	#ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o calosc /usr/lib/x86_64-linux-gnu/crt1.o /usr/lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/${WERSJA_GCC}/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/${WERSJA_GCC} -lstdc++ -lc /usr/lib/gcc/x86_64-linux-gnu/${WERSJA_GCC}/crtend.o /usr/lib/x86_64-linux-gnu/crtn.o main.o menu.o tablice.o
-
+	g++ -std=c++11 tablice.cpp menu.cpp main.cpp -o calosc 
+	
 clean:
 	rm -fv *.o
 	rm -fv ./calosc
