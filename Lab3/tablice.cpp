@@ -12,25 +12,28 @@ Tablica::Tablica() {
 }
 
 int Tablica::utworzTablice(int rozmiarX, int rozmiarY) {
-	cout << "Tablica::utworzTablice():"<<endl;
-	if(tablica != NULL) {
-		cout << "utworzTablice(): tablica nie jest NULL"<<endl;
+	//cout << "Tablica::utworzTablice():"<<endl;
+	if(this->tablica != NULL) {
+		//cout << "utworzTablice(): tablica nie jest NULL"<<endl;
 		for(int y=0; y<this->rozmiarY; y++) {
-			cout << "Usuwam " << y << ". wiersz tablicy o adr.:" << tablica[y] << endl;
-			delete [] tablica[y];
+			//cout << "Usuwam " << y << ". wiersz tablicy o adr.:" << this->tablica[y] << endl;
+			delete [] this->tablica[y];
 		}
-		cout << "Usuwam cala tablice o adr.:" << tablica << endl;
-		delete [] tablica;
+		//cout << "Usuwam cala tablice o adr.:" << this->tablica << endl;
+		delete [] this->tablica;
 	}
 
 	this->rozmiarX = rozmiarX;
 	this->rozmiarY = rozmiarY;
-	tablica = new int*[rozmiarY];
-	cout << "Nowa tablica o adresie: " << tablica << endl;
+	this->tablica = new int*[rozmiarY];
+	//cout << "Nowa tablica o adresie: " << this->tablica << endl;
 	for(int y=0; y<(this->rozmiarY); y++) {
-		tablica[y] = new int[rozmiarX];
+		this->tablica[y] = new int[rozmiarX];
+		//cout << "Inicjalizuje wiersz "<<y<< " o adr.: "<<this->tablica[y]<<endl;
 		for(int x=0; x<(this->rozmiarX); x++) {
-			tablica[y][x] = 0;
+			//cout << "Inicjalizuje komorke("<<x<<","<<y<<") adr.:"<<&(this->tablica[y][x])<<" jako 0."<<endl;
+			this->tablica[y][x] = 0;
+			//cout << "Komorka("<<x<<","<<y<<") adr.:"<<&(this->tablica[y][x])<<" = "<<this->tablica[y][x]<<endl;
 		}
 	}
 	return 0;
@@ -59,7 +62,9 @@ int Tablica::wyswietlTablice(void) {
 	cout << rozmiarX << " kolumn na "; 
 	cout << rozmiarY << " wierszy:" << endl;
 	for(int y=0; y<rozmiarY; y++) {
+		cout << "Adr. wiersza: " << tablica[y]<<endl;
 		for(int x=0; x<rozmiarX; x++) {
+			cout << "Komorka " << &tablica[y][x]<< " = ";
 			cout << tablica[y][x] << "\t";
 		}
 		cout << endl;
@@ -71,16 +76,17 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 	if(rozmiarX<=0 || rozmiarY<=0) {
 		return -1;
 	}
-	cout << "Tablica::zmianaRozmiaru():"<<endl;
+	//cout << "Tablica::zmianaRozmiaru():"<<endl;
 	Tablica tabelka;
 	tabelka.utworzTablice(nowyRozmiarX, nowyRozmiarY);
 	for(int y=0; y<nowyRozmiarY; y++) {
 		if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
-			cout<<"tabelka: wiersz "<<y<<" o adresie " << tabelka.tablica[y] << endl;
+			//cout<<"tabelka: wiersz "<<y<<" o adresie " << tabelka.tablica[y] << endl;
 			for(int x=0; x<nowyRozmiarX; x++) {
-				cout<<"tabelka: komorka "<<x;
+				//cout<<"tabelka: komorka "<<x;
 				if(x<rozmiarX) {
-					cout<<" o adresie "<<&tabelka.tablica[y][x]<<endl;
+					//cout<<" o adresie "<<&tabelka.tablica[y][x];
+					//cout<<" bedzie "<<tablica[y][x]<<" z adr. "<<&tablica[y][x]<<endl;
 					tabelka.tablica[y][x] = tablica[y][x];
 				} else cout<<endl;
 			}
@@ -93,13 +99,11 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 */
 	this->utworzTablice(nowyRozmiarX, nowyRozmiarY);
 	tablica = tabelka.tablica;
-
+/* //OK! odkryłem segf. - w ponizszej petli sa usuwane wiersze potem uzywane jako tablica!
 	for(int y=0; y<nowyRozmiarY; y++) {
 		cout<<"Usuwam "<<y<<" wiersz tabelki o adr.: "<<tabelka.tablica[y]<<endl;
 		delete [] tabelka.tablica[y];
-	}
-	cout<<"Usuwam tabelke o adr.:"<<tabelka.tablica<<endl;
-	delete [] tabelka.tablica;
+	}*/
 	return 0;
 }
 
