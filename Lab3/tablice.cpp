@@ -12,20 +12,25 @@ Tablica::Tablica() {
 }
 
 int Tablica::utworzTablice(int rozmiarX, int rozmiarY) {
+	cout << "Tablica::utworzTablice():"<<endl;
 	if(tablica != NULL) {
+		cout << "utworzTablice(): tablica nie jest NULL"<<endl;
 		for(int y=0; y<this->rozmiarY; y++) {
+			cout << "Usuwam " << y << ". wiersz tablicy o adr.:" << tablica[y] << endl;
 			delete [] tablica[y];
 		}
+		cout << "Usuwam cala tablice o adr.:" << tablica << endl;
 		delete [] tablica;
 	}
 
 	this->rozmiarX = rozmiarX;
 	this->rozmiarY = rozmiarY;
-	this->tablica = new int*[rozmiarY];
+	tablica = new int*[rozmiarY];
+	cout << "Nowa tablica o adresie: " << tablica << endl;
 	for(int y=0; y<(this->rozmiarY); y++) {
-		this->tablica[y] = new int[rozmiarX];
+		tablica[y] = new int[rozmiarX];
 		for(int x=0; x<(this->rozmiarX); x++) {
-			this->tablica[y][x] = 0;
+			tablica[y][x] = 0;
 		}
 	}
 	return 0;
@@ -51,7 +56,7 @@ int Tablica::wyswietlTablice(void) {
 		return -1;
 	}
 	cout << "Oto twoja tablica o rozmiarze ";
-	cout << rozmiarX << " kolumn na  "; 
+	cout << rozmiarX << " kolumn na "; 
 	cout << rozmiarY << " wierszy:" << endl;
 	for(int y=0; y<rozmiarY; y++) {
 		for(int x=0; x<rozmiarX; x++) {
@@ -66,29 +71,34 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 	if(rozmiarX<=0 || rozmiarY<=0) {
 		return -1;
 	}
+	cout << "Tablica::zmianaRozmiaru():"<<endl;
 	Tablica tabelka;
-	this->utworzTablice(nowyRozmiarX, nowyRozmiarY);
+	tabelka.utworzTablice(nowyRozmiarX, nowyRozmiarY);
 	for(int y=0; y<nowyRozmiarY; y++) {
 		if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
+			cout<<"tabelka: wiersz "<<y<<" o adresie " << tabelka.tablica[y] << endl;
 			for(int x=0; x<nowyRozmiarX; x++) {
+				cout<<"tabelka: komorka "<<x;
 				if(x<rozmiarX) {
-					tabelka.tablica[y][x] = (tablica[y][x]);
-				}
+					cout<<" o adresie "<<&tabelka.tablica[y][x]<<endl;
+					tabelka.tablica[y][x] = tablica[y][x];
+				} else cout<<endl;
 			}
 		}
 	}
-	for(int y=0; y<rozmiarY; y++) {
+/*	for(int y=0; y<rozmiarY; y++) {
 		delete [] tablica[y];
 	}
-	delete [] tablica;
-	
+	delete [] tablica; //Zwalnianie pamieci juz jest w utworzTablice()
+*/
+	this->utworzTablice(nowyRozmiarX, nowyRozmiarY);
 	tablica = tabelka.tablica;
-	rozmiarX = nowyRozmiarX;
-	rozmiarY = nowyRozmiarY;
 
 	for(int y=0; y<nowyRozmiarY; y++) {
+		cout<<"Usuwam "<<y<<" wiersz tabelki o adr.: "<<tabelka.tablica[y]<<endl;
 		delete [] tabelka.tablica[y];
 	}
+	cout<<"Usuwam tabelke o adr.:"<<tabelka.tablica<<endl;
 	delete [] tabelka.tablica;
 	return 0;
 }

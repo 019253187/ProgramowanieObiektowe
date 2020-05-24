@@ -4,6 +4,7 @@
 using namespace std;
 
 void wyswietlMenu() {
+	cout << endl;
 	cout << "Co chcesz zrobic?" << endl;
 	cout << "1. Utworz tablice" << endl;
 	cout << "2. Zmien zawartosc komorki tablicy" << endl;
@@ -349,7 +350,7 @@ void uruchomMenu(Tablica tablica) {
 			}
 		}
 		wyswietlMenu();
-		wybranaOpcja = pobierzLiczbe(true, 1, 15);	
+		wybranaOpcja = pobierzLiczbe(true, 1, 15);
 	}
 	wyswietlKomunikat(10);
 }
