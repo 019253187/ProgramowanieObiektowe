@@ -188,10 +188,7 @@ void uruchomMenu(Tablica tablica) {
 					wyswietlKomunikat(-6);
 					nowyRozmiarX = pobierzLiczbe();
 				}
-/*
-				if(tablica.tablica != NULL) {
-					delete [] tablica.tablica;
-				}*/
+				
 				tablica.utworzTablice(nowyRozmiarX, nowyRozmiarY);
 				break;
 			}
