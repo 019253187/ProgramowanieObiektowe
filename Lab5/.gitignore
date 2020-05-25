@@ -1,5 +1,5 @@
 # Wykluczenie skompilowanego programu
-/calosc
+calosc
 # Wykluczenie plików projektu Sublime Text
 *.sublime-project
 *.sublime-workspace
