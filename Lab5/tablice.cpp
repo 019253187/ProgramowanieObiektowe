@@ -182,7 +182,7 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 				if(x<rozmiarX) {
 					//cout<<" o adresie "<<&tabelka.tablica[y][x];
 					//cout<<" bedzie "<<tablica[y][x]<<" z adr. "<<&tablica[y][x]<<endl;
-					tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt);
+					tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt());
 				}// else cout<<endl;
 			}
 		}
@@ -276,8 +276,8 @@ int Tablica::zapiszTablice(string nazwaPliku) {
 	plik << rozmiarX << endl << rozmiarY << endl;
 	for(int y=0; y<rozmiarY; y++) {
 		for(int x=0; x<rozmiarX; x++) {
-			plik << tablica[y][x].typKomorki << "\t";
-			plik << tablica[y][x].zwrocString << "\t";
+			plik << tablica[y][x].typ << "\t";
+			plik << tablica[y][x].zwrocString() << "\t";
 		}
 		plik << endl;
 	}
@@ -301,14 +301,29 @@ int Tablica::otworzTablice(string nazwaPliku) {
 		}
 		this->utworzTablice(odczytano_kolumn, odczytano_wierszy);
 		
-		int biezacyTyp = "int";
+		string biezacyTyp = "int";
 		for(int y=0; y<rozmiarY; y++) {
 			for(int x=0; x<rozmiarX; x++) {
 				dane >> biezacyTyp;
 				tablica[y][x].ustawTyp(biezacyTyp);
-				auto biezacaKomorka;
-				dane >> biezacaKomorka;
-				tablica[y][x].ustaw(biezacaKomorka);
+
+				if(biezacyTyp == "int") {
+					int biezacaKomorka;
+					dane >> biezacaKomorka;
+					tablica[y][x].ustaw(biezacaKomorka);
+				}
+
+				if(biezacyTyp == "float") {
+					float biezacaKomorka;
+					dane >> biezacaKomorka;
+					tablica[y][x].ustaw(biezacaKomorka);
+				}
+
+				if(biezacyTyp == "string") {
+					string biezacaKomorka;
+					dane >> biezacaKomorka;
+					tablica[y][x].ustaw(biezacaKomorka);
+				}
 			}
 		}
 		cout << endl;
