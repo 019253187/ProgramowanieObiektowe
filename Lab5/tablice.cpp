@@ -187,12 +187,19 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 			}
 		}
 	}
-/*	for(int y=0; y<rozmiarY; y++) {
-		delete [] tablica[y];
+	//Usuniecie starej tablicy - zapobiezenie memleak
+	if(this->tablica != NULL) {
+		//cout << "utworzTablice(): tablica nie jest NULL"<<endl;
+		for(int y=0; y<this->rozmiarY; y++) {
+			//cout << "Usuwam " << y << ". wiersz tablicy o adr.:" << this->tablica[y] << endl;
+			delete [] this->tablica[y];
+		}
+		//cout << "Usuwam cala tablice o adr.:" << this->tablica << endl;
+		delete [] this->tablica;
 	}
-	delete [] tablica; //Zwalnianie pamieci juz jest w utworzTablice()
-*/
-	this->utworzTablice(nowyRozmiarX, nowyRozmiarY);
+
+	this->rozmiarX = nowyRozmiarX;
+	this->rozmiarY = nowyRozmiarY;
 	tablica = tabelka.tablica;
 /* //OK! odkryłem segf. - w ponizszej petli sa usuwane wiersze potem uzywane jako tablica!
 	for(int y=0; y<nowyRozmiarY; y++) {
