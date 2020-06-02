@@ -1,9 +1,8 @@
-Zmiany wzgledem Lab1:
--przejscie na dwuwymiarowe tablice
--przejscie na strukture - Lab3
--wspolpraca z plikami(odczyt/zapis) - Lab2
--dodanie przykladowego pliku z danymi "dane.txt"(wygenerowany przez program)
+# Lab5
+## Zmiany względem Lab3/4
+- Dodanie klasy Komorka, teraz kazda komorka tablicy jest obiektem tej klasy
+- Każda komórka może przechowywać teraz wartość typu int, float lub string.
+- Rozszerzenie calej reszty pod wsparcie dwoch powyższych punktów
+- Aktualizacja docbloków
+- Plik przykładowy to teraz "dane.dat"
 
-Ostatnie zmiany:
-
-Nota: Program oparty o C++11
