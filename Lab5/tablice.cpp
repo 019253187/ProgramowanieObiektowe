@@ -182,8 +182,17 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 				if(x<rozmiarX) {
 					//cout<<" o adresie "<<&tabelka.tablica[y][x];
 					//cout<<" bedzie "<<tablica[y][x]<<" z adr. "<<&tablica[y][x]<<endl;
-					tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt());
-				}// else cout<<endl;
+					if(tablica[y][x].typ == "int") {
+						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt());
+					} else if(tablica[y][x].typ == "float") {
+						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocFloat());
+					} else if(tablica[y][x].typ == "string") {
+						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocString());
+					} else {
+						cout << "Nieznany typ komorki tablicy";
+						cout << "przy zmianie rozmiaru." << endl;
+					}
+				}
 			}
 		}
 	}
@@ -341,4 +350,35 @@ int Tablica::otworzTablice(string nazwaPliku) {
 	}
 	dane.close();
 	return -1;
+}
+
+int Tablica::zmienTypKomorki(int xKomorki, int yKomorki, std::string nowyTyp) {
+	if(tablica[yKomorki][xKomorki].ustawTyp(nowyTyp) == 0) {
+		return 0;
+	} else {
+		return -1;
+	}
+}
+
+int Tablica::zmienTypWiersza(int wiersz, std::string nowyTyp) {
+	for(int x = 0; x < rozmiarY; x++) {
+		tablica[wiersz][x].ustawTyp(nowyTyp);
+	}
+	return 0;
+}
+
+int Tablica::zmienTypKolumny(int kolumna, std::string nowyTyp) {
+	for(int y = 0; y < rozmiarY; y++) {
+		tablica[y][kolumna].ustawTyp(nowyTyp);
+	}
+	return 0;
+}
+
+int Tablica::zmienTypTablicy(std::string nowyTyp) {
+	for(int y=0; y<rozmiarY; y++) {
+		for(int x=0; x<rozmiarX; x++) {
+				tablica[y][x].ustawTyp(nowyTyp);
+		}
+	}
+	return 0;
 }

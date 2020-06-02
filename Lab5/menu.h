@@ -25,7 +25,15 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1, int opcjonalnaLi
  * @param zakresMin Gorna granica zakresu wartosci przyjmowanych przez funkcje
  * @return Liczba calkowita wprowadzona przez uzytkownika lub -1 w razie bledu
  */
-int pobierzLiczbe(bool ograniczona, int zakresMin, int zakresMax);
+int pobierzInt(bool ograniczona, int zakresMin, int zakresMax);
+
+/**
+ * Wewnetrzna funkcja uzywana przez menu.cpp
+ * Odczytuje liczbe typu float z wejscia standardowego.
+ *
+ * @return Liczba zmiennoprzecinkowa wprowadzona przez uzytkownika
+ */
+float pobierzFloat();
 
 /**
  * Glowna funkcja do uruchamiania menu.

@@ -7,7 +7,7 @@ void wyswietlMenu() {
 	cout << endl;
 	cout << "Co chcesz zrobic?" << endl;
 	cout << "1. Utworz tablice" << endl;
-	cout << "2. Zmien zawartosc komorki tablicy" << endl;
+	cout << "2. Zmien typ i/lub zawartosc komorki tablicy" << endl;
 	cout << "3. Wyswietl tablice" << endl;
 	cout << "4. Zmien rozmiar tablicy" << endl;
 	cout << "5. Zsumuj wedlug wiersza" << endl;
@@ -20,14 +20,22 @@ void wyswietlMenu() {
 	cout << "12. Znajdz srednia kolumny" << endl;
 	cout << "13. Zapisz tablice do pliku" << endl;
 	cout << "14. Odczytaj tablice z pliku" << endl;
-
-	cout << "15. Zakoncz program" << endl;
+	cout << "15. Zmien typ wszystkich komorek w tablicy" << endl;
+	cout << "16. Zmien typ calego wybranego wiersza" << endl;
+	cout << "17. Zmien typ calej wybranej kolumny" << endl;
+	cout << "18. Zakoncz program" << endl;
 
 	cout << "Podaj swoj wybor: ";
 }
 
 void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjonalnaLiczba2 = -42, float opcjonalnaLiczba3 = 4.20) {
 	switch(nrKomunikatu) {
+		case -8:
+			cout << "Przepraszam, ta funkcja nie jest jeszcze zaimplementowana." << endl;
+			break;
+		case -7:
+			cout << "Podano nieznany typ danych, nic nie zostalo zmienione." << endl;
+			break;
 		case -6:
 			cout << "Rozmiar tablicy nie moze byc ujemny ani 0." << endl;
 			cout << "Podaj poprawny rozmiar tworzonej tablicy: ";
@@ -68,6 +76,10 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 		case 31:
 			cout << "Podaj wspolrzedna Y komorki, ktora chcesz zmienic: ";
 			break;
+		case 40:
+			cout << "Dostepne typy to: int float string" << endl;
+			cout << "Podaj, na jaki typ ustawic komorke: " << endl;
+			break;
 		case 4:
 			cout << "Podaj nowa zawartosc elementu (" << opcjonalnaLiczba1;
 			cout << "," << opcjonalnaLiczba2 << "): ";
@@ -77,6 +89,15 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 			break;
 		case 51:
 			cout << "Podaj nowy rozmiar Y tablicy: ";
+			break;
+		case 52:
+			cout << "Podaj docelowy typ calej tablicy: ";
+			break;
+		case 53:
+			cout << "Podaj docelowy typ kolumny " << opcjonalnaLiczba1 <<". : ";
+			break;
+		case 54:
+			cout << "Podaj docelowy typ wiersza " << opcjonalnaLiczba1 <<". : ";
 			break;
 		case 6:
 			cout << "UWAGA! Nowy rozmiar tablicy jest mniejszy od starego." << endl;
@@ -143,7 +164,7 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 	}
 }
 
-int pobierzLiczbe(bool ograniczona = false, int zakresMin = 0, int zakresMax = 100) {
+int pobierzInt(bool ograniczona = false, int zakresMin = 0, int zakresMax = 100) {
 	int pobranaLiczba = -1;
 
 	//cout << "Zakres minimalny to " << zakresMin << endl;
@@ -169,25 +190,40 @@ int pobierzLiczbe(bool ograniczona = false, int zakresMin = 0, int zakresMax = 1
 	return pobranaLiczba;
 }
 
+float pobierzFloat() {
+	float pobranaLiczba = -1;
+
+	cin >> pobranaLiczba;
+	while(cin.fail()) {
+		wyswietlKomunikat(-5);
+		cin.clear();
+		cin.ignore(256, '\n');
+		cin >> pobranaLiczba;
+		continue;
+	}
+
+	return pobranaLiczba;
+}
+
 void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
 	
-	while(wybranaOpcja<15) { 
+	while(wybranaOpcja<18) { 
 		switch(wybranaOpcja) {
 			case 1: {
 				wyswietlKomunikat(11);
-				int nowyRozmiarY = pobierzLiczbe();
+				int nowyRozmiarY = pobierzInt();
 				while(nowyRozmiarY<=0) {
 					wyswietlKomunikat(-6);
-					nowyRozmiarY = pobierzLiczbe();
+					nowyRozmiarY = pobierzInt();
 				}
 
 				wyswietlKomunikat(1);
-				int nowyRozmiarX = pobierzLiczbe();
+				int nowyRozmiarX = pobierzInt();
 				while(nowyRozmiarX<=0) {
 					wyswietlKomunikat(-6);
-					nowyRozmiarX = pobierzLiczbe();
+					nowyRozmiarX = pobierzInt();
 				}
 				
 				tablica.utworzTablice(nowyRozmiarX, nowyRozmiarY);
@@ -199,13 +235,31 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(3);
-				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				wyswietlKomunikat(31);
-				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-
+				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
+				
+				string docelowyTyp = "nic";
+				wyswietlKomunikat(40);
+				cin >> docelowyTyp;
 				wyswietlKomunikat(4, adresX, adresY);
-				int nowaZawartosc = pobierzLiczbe();
-				tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
+
+				if(docelowyTyp == "int") {
+					int nowaZawartosc = pobierzInt();
+					tablica.zmienTypKomorki(adresX, adresY, docelowyTyp);
+					tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
+				} else if(docelowyTyp == "float") {
+					float nowaZawartosc = pobierzFloat();
+					tablica.zmienTypKomorki(adresX, adresY, docelowyTyp);
+					tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
+				} else if(docelowyTyp == "string") {
+					string nowaZawartosc = "pusta";
+					cin >> nowaZawartosc;
+					tablica.zmienTypKomorki(adresX, adresY, docelowyTyp);
+					tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
+				} else {
+					wyswietlKomunikat(-7);
+				}
 				break;
 			}
 			case 3:{
@@ -217,17 +271,17 @@ void uruchomMenu(Tablica tablica) {
 			}
 			case 4: {
 				wyswietlKomunikat(51);
-				int nowyRozmiarY = pobierzLiczbe();
+				int nowyRozmiarY = pobierzInt();
 				while(nowyRozmiarY<=0) {
 					wyswietlKomunikat(-6);
-					nowyRozmiarY = pobierzLiczbe();
+					nowyRozmiarY = pobierzInt();
 				}
 
 				wyswietlKomunikat(5);
-				int nowyRozmiarX = pobierzLiczbe();
+				int nowyRozmiarX = pobierzInt();
 				while(nowyRozmiarX<=0) {
 					wyswietlKomunikat(-6);
-					nowyRozmiarX = pobierzLiczbe();
+					nowyRozmiarX = pobierzInt();
 				}
 				/*if(nowyRozmiar<(*rozmiarTablicy)) {
 					wyswietlKomunikat(6, nowyRozmiar, *rozmiarTablicy);
@@ -248,7 +302,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(15);
-				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
 				float suma = tablica.sumujWiersz(adresY);
 				wyswietlKomunikat(25, adresY, 55, suma);
 				break;
@@ -259,7 +313,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(16);
-				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				float suma = tablica.sumujKolumne(adresX);
 				wyswietlKomunikat(26, adresX, 55, suma);
 				break;
@@ -270,7 +324,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(15);
-				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
 				float minimum = tablica.minimumWiersza(adresY);
 				wyswietlKomunikat(35, adresY, 55, minimum);
 				break;
@@ -281,7 +335,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(16);
-				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				float minimum = tablica.minimumKolumny(adresX);
 				wyswietlKomunikat(36, adresX, 55, minimum);
 				break;
@@ -292,7 +346,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(15);
-				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
 				float maksimum = tablica.maksimumWiersza(adresY);
 				wyswietlKomunikat(45, adresY, 55, maksimum);
 				break;
@@ -303,7 +357,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(16);
-				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				float maksimum = tablica.maksimumKolumny(adresX);
 				wyswietlKomunikat(46, adresX, 55, maksimum);
 				break;
@@ -314,7 +368,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(15);
-				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
+				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
 				float srednia = tablica.sredniaWiersza(adresY);
 				wyswietlKomunikat(55, adresY, 55, srednia);
 				break;
@@ -325,7 +379,7 @@ void uruchomMenu(Tablica tablica) {
 					break;
 				}
 				wyswietlKomunikat(16);
-				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
+				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				float srednia = tablica.sredniaKolumny(adresX);
 				wyswietlKomunikat(56, adresX, 55, srednia);
 				break;
@@ -348,9 +402,49 @@ void uruchomMenu(Tablica tablica) {
 				tablica.otworzTablice(nazwaPliku);
 				break;
 			}
+			case 15: {
+				wyswietlKomunikat(52);
+				string nowyTyp = "nic";
+				cin >> nowyTyp;
+				if(nowyTyp == "int" || nowyTyp == "float" || nowyTyp == "string") {
+					tablica.zmienTypTablicy(nowyTyp);
+				} else {
+					wyswietlKomunikat(-7);
+				}
+				break;
+			}
+			case 16: {
+				wyswietlKomunikat(15);
+				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
+				wyswietlKomunikat(54, adresY);
+				string nowyTyp = "nic";
+				cin >> nowyTyp;
+				if(nowyTyp == "int" || nowyTyp == "float" || nowyTyp == "string") {
+					tablica.zmienTypWiersza(adresY, nowyTyp);
+				} else {
+					wyswietlKomunikat(-7);
+				}
+				break;
+			}
+			case 17: {
+				wyswietlKomunikat(16);
+				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
+				wyswietlKomunikat(53, adresX);
+				string nowyTyp = "nic";
+				cin >> nowyTyp;
+				if(nowyTyp == "int" || nowyTyp == "float" || nowyTyp == "string") {
+					tablica.zmienTypKolumny(adresX, nowyTyp);
+				} else {
+					wyswietlKomunikat(-7);
+				}
+				break;
+			}
+			default:
+				wyswietlKomunikat(-8);
+				break;
 		}
 		wyswietlMenu();
-		wybranaOpcja = pobierzLiczbe(true, 1, 15);
+		wybranaOpcja = pobierzInt(true, 1, 18);
 	}
 	wyswietlKomunikat(10);
 }

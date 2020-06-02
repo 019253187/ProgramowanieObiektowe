@@ -3,6 +3,12 @@
 
 #include <string>
 
+/**@class Komorka
+ * @brief Klasa reprezentujaca pojedyncza komorke
+ *
+ * @var Komorka::typ String reprezentujacy typ danej komorki
+ * @var Zawartosc* pole przechowujace zawartosc danego typu
+ */
 class Komorka {
 public:
 	std::string typ;
@@ -43,17 +49,15 @@ public:
 	
 	/** Inicjalizuje nowa tablice 2D o podanych wymiarach
 	 *
-	 * @param tablica Wskaznik do tablicy do zainicjalizowania
 	 * @param rozmiarX ilosc kolumn w danym wierszu
 	 * @param rozmiarY ilosc wierszy
-	 * @return obiekt typu Tablica ze wszystkimi komorkami rownymi 0
+	 * @return 0 lub kod błędu
 	 */
 	int utworzTablice(int rozmiarX, int rozmiarY);
 
 	/**
 	 * Zmienia zawartosc wybranej komorki w tablicy.
 	 *
-	 * @param tablica Modyfikowana tablica
 	 * @param xKomorki Współrzędna X(kolumna) komórki do zmodyfikowania 
 	 * @param yKomorki Współrzędna Y(wiersz) komórki do zmodyfikowania 
 	 * @param nowaZawartosc Docelowa zawartosc modyfikowanej komorki
@@ -72,7 +76,6 @@ public:
 	 * do nowej na tyle, na ile to mozliwe. Komorki ponad rozmiar starej tablicy sa
 	 * inicjalizowane jako "0". Stara tablica jest usuwana.
 	 *
-	 * @param Tablica Wskaznik do tablicy, ktorej rozmiar ma zostac zmieniony
 	 * @param nowyRozmiarX Ilosc kolumn w nowej tablicy
 	 * @param nowyRozmiarY Ilosc wierszy w nowej tablicy
 	 * @return Kod błędu lub 0 w przypadku błędu
@@ -82,7 +85,6 @@ public:
 	/**
 	 * Zwraca sume wartosci wszystkich komorek danego wiersza.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param wiersz indeks wiersza do zsumowania
 	 * @return Suma wartosci w danym wierszu 
 	 */
@@ -91,7 +93,6 @@ public:
 	/**
 	 * Zwraca sume wartosci wszystkich komorek danej kolumny.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do zsumowania
 	 * @return Suma wartosci w danej kolumnie 
 	 */
@@ -100,7 +101,6 @@ public:
 	/**
 	 * Zwraca najmniejsza wartosc ze wszystkich komorek danego wiersza.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do przeszukania
 	 * @return Najmniejsza wartosc w danym wierszu 
 	 */
@@ -109,7 +109,6 @@ public:
 	/**
 	 * Zwraca najwieksza wartosc ze wszystkich komorek danego wiersza.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do przeszukania
 	 * @return Najwieksza wartosc w danym wierszu 
 	 */
@@ -118,7 +117,6 @@ public:
 	/**
 	 * Zwraca wartosc srednia wszystkich komorek danego wiersza.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do przeszukania
 	 * @return wartosc srednia danego wiersza 
 	 */
@@ -127,7 +125,6 @@ public:
 	/**
 	 * Zwraca najmniejsza wartosc ze wszystkich komorek danej kolumny.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do przeszukania
 	 * @return Najmniejsza wartosc w danej kolumnie 
 	 */
@@ -136,7 +133,6 @@ public:
 	/**
 	 * Zwraca najwieksza wartosc ze wszystkich komorek danej kolumny.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do przeszukania
 	 * @return Najwieksza wartosc w danej kolumnie 
 	 */
@@ -145,7 +141,6 @@ public:
 	/**
 	 * Zwraca wartosc srednia wszystkich komorek danej kolumny.
 	 *
-	 * @param tablica Tablica robocza
 	 * @param kolumna indeks kolumny do przeszukania
 	 * @return wartosc srednia danej kolumny 
 	 */
@@ -153,18 +148,48 @@ public:
 
 	/** Zapisuje tablice do pliku o podanej nazwie
 	 *
-	 * @param tablica Tablica do zapisania
 	 * @param nazwaPliku nazwa lub sciezka pliku, w ktorym ma zostac zapisana tablica
 	 * @return Kod błędu lub 0 w przypadku powodzenia
-	*/
+	 */
 	int zapiszTablice(std::string nazwaPliku);
 
 	/** Ładuje tablicę do pliku o podanej nazwie
 	 *
-	 * @param tablica Tablica, ktora ma zostac zainicjalizowana z pliku
 	 * @param nazwaPliku nazwa lub sciezka pliku, z ktorego odczytana bedzie tablica
 	 * @return Kod błędu lub 0 w przypadku powodzenia
-	*/
+	 */
 	int otworzTablice(std::string nazwaPliku);
+
+	/** Zmienia typ danych przechowywanych przez dana, pojedyncza komorke
+	 *
+	 * @param xKomorki Współrzędna X(kolumna) komórki do zmiany typu 
+	 * @param yKomorki Współrzędna Y(wiersz) komórki do zmiany typu 
+	 * @param nowyTyp Docelowy typ komorki
+	 * @return Kod błędu lub 0 w przypadku powodzenia
+	 */
+	int zmienTypKomorki(int xKomorki, int yKomorki, std::string nowyTyp);
+
+	/** Zmienia typ danych przechowywanych przez wszystkie komorki danego wiersza
+	 *
+	 * @param wiersz Współrzędna wiersza, ktorego typ ma byc zmieniony
+	 * @param nowyTyp Docelowy typ wiersza
+	 * @return Kod błędu lub 0 w przypadku powodzenia
+	 */
+	int zmienTypWiersza(int wiersz, std::string nowyTyp);
+
+	/** Zmienia typ danych przechowywanych przez wszystkie komorki danej kolumny
+	 *
+	 * @param wiersz Współrzędna kolumny, ktorej typ ma byc zmieniony
+	 * @param nowyTyp Docelowy typ kolumny
+	 * @return Kod błędu lub 0 w przypadku powodzenia
+	 */
+	int zmienTypKolumny(int kolumny, std::string nowyTyp);
+
+	/** Zmienia typ danych przechowywanych przez kazda komorke w calej tablicy
+	 *
+	 * @param nowyTyp Docelowy typ calej tablicy
+	 * @return Kod błędu lub 0 w przypadku powodzenia
+	 */
+	int zmienTypTablicy(std::string nowyTyp);
 };
 #endif
