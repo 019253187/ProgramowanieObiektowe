@@ -26,7 +26,7 @@ void wyswietlMenu() {
 	cout << "Podaj swoj wybor: ";
 }
 
-void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjonalnaLiczba2 = -42) {
+void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjonalnaLiczba2 = -42, float opcjonalnaLiczba3 = 4.20) {
 	switch(nrKomunikatu) {
 		case -6:
 			cout << "Rozmiar tablicy nie moze byc ujemny ani 0." << endl;
@@ -94,43 +94,43 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 		case 10:
 			cout << "Zycze zdrowia." << endl;
 			break;
+		case 25:
+			cout << "Oto suma wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 26:
+			cout << "Oto suma kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 35:
+			cout << "Oto minimum wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 36:
+			cout << "Oto minimum kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 45:
+			cout << "Oto maksimum wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 46:
+			cout << "Oto maksimum kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 55:
+			cout << "Oto srednia wiersza " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
+		case 56:
+			cout << "Oto srednia kolumny " << opcjonalnaLiczba1 << ". : ";
+			cout << opcjonalnaLiczba3 << endl;
+			break;
 		case 15:
 			cout << "Ktory wiersz? ";
 			break;
 		case 16:
 			cout << "Ktora kolumna? ";
-			break;
-		case 25:
-			cout << "Oto suma wiersza " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 26:
-			cout << "Oto suma kolumny " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 35:
-			cout << "Oto minimum wiersza " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 36:
-			cout << "Oto minimum kolumny " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 45:
-			cout << "Oto maksimum wiersza " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 46:
-			cout << "Oto maksimum kolumny " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 55:
-			cout << "Oto srednia wiersza " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
-			break;
-		case 56:
-			cout << "Oto srednia kolumny " << opcjonalnaLiczba1 << ". : ";
-			cout << opcjonalnaLiczba2 << endl;
 			break;
 		case 100:
 			cout << "Podaj nazwe pliku(wraz z rozszerzeniem) do zapisania: ";
@@ -249,8 +249,8 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				int suma = tablica.sumujWiersz(adresY);
-				wyswietlKomunikat(25, adresY, suma);
+				float suma = tablica.sumujWiersz(adresY);
+				wyswietlKomunikat(25, adresY, 55, suma);
 				break;
 			}
 			case 6: {
@@ -260,8 +260,8 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				int suma = tablica.sumujKolumne(adresX);
-				wyswietlKomunikat(26, adresX, suma);
+				float suma = tablica.sumujKolumne(adresX);
+				wyswietlKomunikat(26, adresX, 55, suma);
 				break;
 			}
 			case 7: {
@@ -271,8 +271,8 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				int suma = tablica.minimumWiersza(adresY);
-				wyswietlKomunikat(35, adresY, suma);
+				float minimum = tablica.minimumWiersza(adresY);
+				wyswietlKomunikat(35, adresY, 55, minimum);
 				break;
 			}
 			case 8: {
@@ -282,8 +282,8 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				int suma = tablica.minimumKolumny(adresX);
-				wyswietlKomunikat(36, adresX, suma);
+				float minimum = tablica.minimumKolumny(adresX);
+				wyswietlKomunikat(36, adresX, 55, minimum);
 				break;
 			}
 			case 9: {
@@ -293,8 +293,8 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
-				int suma = tablica.maksimumWiersza(adresY);
-				wyswietlKomunikat(45, adresY, suma);
+				float maksimum = tablica.maksimumWiersza(adresY);
+				wyswietlKomunikat(45, adresY, 55, maksimum);
 				break;
 			}
 			case 10: {
@@ -304,8 +304,8 @@ void uruchomMenu(Tablica tablica) {
 				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
-				int suma = tablica.maksimumKolumny(adresX);
-				wyswietlKomunikat(46, adresX, suma);
+				float maksimum = tablica.maksimumKolumny(adresX);
+				wyswietlKomunikat(46, adresX, 55, maksimum);
 				break;
 			}
 			case 11: {
@@ -316,7 +316,7 @@ void uruchomMenu(Tablica tablica) {
 				wyswietlKomunikat(15);
 				int adresY = pobierzLiczbe(true, 0, (tablica.rozmiarY-1));
 				float srednia = tablica.sredniaWiersza(adresY);
-				wyswietlKomunikat(55, adresY, srednia);
+				wyswietlKomunikat(55, adresY, 55, srednia);
 				break;
 			}
 			case 12: {
@@ -327,7 +327,7 @@ void uruchomMenu(Tablica tablica) {
 				wyswietlKomunikat(16);
 				int adresX = pobierzLiczbe(true, 0, (tablica.rozmiarX-1));
 				float srednia = tablica.sredniaKolumny(adresX);
-				wyswietlKomunikat(56, adresX, srednia);
+				wyswietlKomunikat(56, adresX, 55, srednia);
 				break;
 			}
 			case 13: {
