@@ -1,0 +1,9 @@
+# Wykluczenie skompilowanego programu
+calosc
+
+# Wykluczenie posrednich produktow kompilacji(.o)
+*.o
+
+# Wykluczenie plików projektu Sublime Text
+*.sublime-project
+*.sublime-workspace
