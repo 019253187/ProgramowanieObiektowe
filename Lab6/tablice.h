@@ -11,6 +11,8 @@
 class Komorka {
 public:
 	virtual std::string typ;
+	virtual int ustaw(int wartosc);
+	virtual int ustaw(std::string wartosc);
 };
 
 /**@class KomorkaLiczbowa
