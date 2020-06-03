@@ -4,47 +4,65 @@
 #include <string>
 
 /**@class Komorka
- * @brief Klasa reprezentujaca pojedyncza komorke
+ * @brief Klasa podstawowa dla poszczegolnych rodzajow Komorek
  *
- * @var Komorka::typ String reprezentujacy typ danej komorki
- * @var Zawartosc* pole przechowujace zawartosc danego typu
+ * @var typ String reprezentujacy typ danej komorki
  */
 class Komorka {
 public:
-	std::string typ;
-
-	Komorka();
-	Komorka(std::string typKomorki);
-	int ustaw(int wartosc);
-	int ustaw(float wartosc);
-	int ustaw(std::string wartosc);
-	int zwrocInt();
-	float zwrocFloat();
-	std::string zwrocString();
-	int ustawTyp(std::string typKomorki);
-	
-private:
-	int zawartoscInt;
-	float zawartoscFloat;
-	std::string zawartoscString;
+	virtual std::string typ;
 };
 
+/**@class KomorkaLiczbowa
+ * @brief Klasa reprezentujaca Komorke zawierajaca wartosc typu int
+ *
+ * @var typ String reprezentujacy typ komorki (tu zawsze "int")
+ * @var zawartosc Zawartosc komorki(liczba typu int)
+ */
+class KomorkaLiczbowa: public Komorka {
+public:
+	std::string typ;
+	KomorkaLiczbowa();
+	int ustaw(int wartosc);
+	int zwroc();
+private:
+	int zawartosc;
+}
+
+/**@class KomorkaTekstowa
+ * @brief Klasa reprezentujaca Komorke zawierajaca wartosc typu string
+ *
+ * @var typ String reprezentujacy typ danej komorki(tu zawsze "string")
+ * @var zawartosc Zawartosc komorki(ciąg znaków typu string)
+ */
+class KomorkaTekstowa: public Komorka {
+public:
+	std::string typ;
+	KomorkaTekstowa();
+	int ustaw(std::string wartosc);
+	std::string zwroc();
+private:
+	std::string zawartosc;
+}
 
 /**@class Tablica
  * @brief Klasa sluzaca do wygodnego przechowywania i obslugi tablic
  * @var Tablica::tablica
  * Wlasciwa, dwuwymiarowa tablica typu int(wskaznik wskaznika)
  * @var Tablica::rozmiarX
- * Ilosc komorek w kazdym wierszu tablicy
+ * Ilosc kolumn w calej tablicy
  * @var Tablica::rozmiarY
- * Ilosc wierszy w calej tablicy
+ * Ilosc wierszy w kazdej kolumnie tablicy
+ * @var Tablica::typyKolumn
+ * Tablica nazw typow w poszczegolnych kolumnach
  */
 class Tablica {
 public:
 	Komorka** tablica;
 	int rozmiarX;
 	int rozmiarY;
-	
+	std::string* typyKolumn;
+
 	Tablica(); //Konstruktor do inicjalizowania wartości początkowych
 	
 	/** Inicjalizuje nowa tablice 2D o podanych wymiarach
@@ -53,7 +71,7 @@ public:
 	 * @param rozmiarY ilosc wierszy
 	 * @return 0 lub kod błędu
 	 */
-	int utworzTablice(int rozmiarX, int rozmiarY);
+	int utworzTablice(int rozmiarX, int rozmiarY, std::string typyKolumn);
 
 	/**
 	 * Zmienia zawartosc wybranej komorki w tablicy.
@@ -64,8 +82,6 @@ public:
 	 * @return Kod błędu lub 0 w przypadku powodzenia
 	 */
 	int zmienKomorke(int xKomorki, int yKomorki, int nowaZawartosc);
-
-	int zmienKomorke(int xKomorki, int yKomorki, float nowaZawartosc);
 
 	int zmienKomorke(int xKomorki, int yKomorki, std::string nowaZawartosc);
 
@@ -159,23 +175,6 @@ public:
 	 * @return Kod błędu lub 0 w przypadku powodzenia
 	 */
 	int otworzTablice(std::string nazwaPliku);
-
-	/** Zmienia typ danych przechowywanych przez dana, pojedyncza komorke
-	 *
-	 * @param xKomorki Współrzędna X(kolumna) komórki do zmiany typu 
-	 * @param yKomorki Współrzędna Y(wiersz) komórki do zmiany typu 
-	 * @param nowyTyp Docelowy typ komorki
-	 * @return Kod błędu lub 0 w przypadku powodzenia
-	 */
-	int zmienTypKomorki(int xKomorki, int yKomorki, std::string nowyTyp);
-
-	/** Zmienia typ danych przechowywanych przez wszystkie komorki danego wiersza
-	 *
-	 * @param wiersz Współrzędna wiersza, ktorego typ ma byc zmieniony
-	 * @param nowyTyp Docelowy typ wiersza
-	 * @return Kod błędu lub 0 w przypadku powodzenia
-	 */
-	int zmienTypWiersza(int wiersz, std::string nowyTyp);
 
 	/** Zmienia typ danych przechowywanych przez wszystkie komorki danej kolumny
 	 *
