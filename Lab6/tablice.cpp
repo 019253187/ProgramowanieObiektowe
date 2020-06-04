@@ -21,7 +21,7 @@ int KomorkaLiczbowa::zwroc() {
 
 KomorkaTekstowa::KomorkaTekstowa() {
 	typ = "string";
-	zawartosc = 0;
+	zawartosc = "0";
 }
 
 int KomorkaTekstowa::ustaw(string wartosc) {
@@ -41,34 +41,37 @@ Tablica::Tablica() {
 }
 
 int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string[] typyKolumn) {
-	//cout << "Tablica::utworzTablice():"<<endl;
 	if(this->tablica != NULL) {
-		//cout << "utworzTablice(): tablica nie jest NULL"<<endl;
 		for(int x=0; x<this->rozmiarX; x++) {
-			//cout << "Usuwam " << y << ". wiersz tablicy o adr.:" << this->tablica[y] << endl;
 			delete [] this->tablica[x];
 		}
-		//cout << "Usuwam cala tablice o adr.:" << this->tablica << endl;
-		delete [] this->tablica;
-	}
 
+		delete [] this->tablica;
+		delete [] this->typyKolumn;
+	}
 	this->rozmiarX = rozmiarX;
 	this->rozmiarY = rozmiarY;
+	this->typyKolumn = new string[rozmiarX];
 	this->tablica = new Komorka*[rozmiarX];
 	for(int x=0; x<(this->rozmiarX); x++) {
 		this->tablica[x] = NULL;
+		this->typyKolumn[x] = typyKolumn[x];
 		if(typyKolumn[x] == "int") {
 			this->tablica[x] = new KomorkaLiczbowa[rozmiarY];
 		} else if(typyKolumn[x] == "string") {
 			this->tablica[x] = new KomorkaTekstowa[rozmiarY];
+		} else {
+			cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
 		}
-		for(int y=0; y<(this->rozmiarY); y++) {
-			if(typyKolumn[x] == "int") {
+		//Poniższe zakomentowałem gdyż w sumie oddzielna inicjalizacja w tej funkcji
+		//już nie jest potrzebna - konstruktory komórek je inicjalizują.
+		/*for(int y=0; y<(this->rozmiarY); y++) {
+			if(this->typyKolumn[x] == "int") {
 				this->tablica[x][y].ustaw(0);
-			} else if(typyKolumn[x] == "string") {
+			} else if(this->typyKolumn[x] == "string") {
 				this->tablica[x][y].ustaw("nic");
 			}
-		}
+		}*/
 	}
 	return 0;
 }
@@ -116,6 +119,12 @@ int Tablica::wyswietlTablice(void) {
 		}
 		cout << endl;
 	}
+
+	for(int x; x<rozmiarX; x++) {
+		cout << typyKolumn[x] << "\t";
+	}
+	cout << endl;
+
 	return 0;
 }
 
@@ -123,50 +132,44 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 	if(rozmiarX<=0 || rozmiarY<=0) {
 		return -1;
 	}
-	//cout << "Tablica::zmianaRozmiaru():"<<endl;
+
+	string* noweTypyKolumn = new string[nowyRozmiarX];
+	for(int x = 0; x<nowyRozmiarX; x++) {
+		if(x<rozmiarX) {
+			noweTypyKolumn[x] = typyKolumn[x];
+		} else {
+			noweTypyKolumn[x] = "int";
+		}
+	}
 	Tablica tabelka;
-	tabelka.utworzTablice(nowyRozmiarX, nowyRozmiarY);
-	for(int y=0; y<nowyRozmiarY; y++) {
-		if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
-			//cout<<"tabelka: wiersz "<<y<<" o adresie " << tabelka.tablica[y] << endl;
-			for(int x=0; x<nowyRozmiarX; x++) {
-				//cout<<"tabelka: komorka "<<x;
-				if(x<rozmiarX) {
-					//cout<<" o adresie "<<&tabelka.tablica[y][x];
-					//cout<<" bedzie "<<tablica[y][x]<<" z adr. "<<&tablica[y][x]<<endl;
-					if(tablica[y][x].typ == "int") {
-						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt());
-					} else if(tablica[y][x].typ == "float") {
-						tabelka.tablica[y][x].(float)ustaw(tablica[y][x].zwroc());
-					} else if(tablica[y][x].typ == "string") {
-						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocString());
-					} else {
-						cout << "Nieznany typ komorki tablicy";
-						cout << "przy zmianie rozmiaru." << endl;
+	tabelka.utworzTablice(nowyRozmiarX, nowyRozmiarY, noweTypyKolumn);
+	
+	for(int x=0; x<nowyRozmiarX; x++) {
+		if(x<rozmiarX) {
+			if(typyKolumn[x] == "int" || typyKolumn[x] == "string") {
+				for(int y=0; y<nowyRozmiarY; y++) {
+					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
+						tabelka.tablica[y][x].ustaw(tablica[y][x].zwroc());
 					}
 				}
+			} else {	
+				cout << "Nieznany typ komorki tablicy";
+				cout << "przy zmianie rozmiaru." << endl;
 			}
 		}
 	}
 	//Usuniecie starej tablicy - zapobiezenie memleak
 	if(this->tablica != NULL) {
-		//cout << "utworzTablice(): tablica nie jest NULL"<<endl;
-		for(int y=0; y<this->rozmiarY; y++) {
-			//cout << "Usuwam " << y << ". wiersz tablicy o adr.:" << this->tablica[y] << endl;
-			delete [] this->tablica[y];
+		for(int x=0; x<this->rozmiarX; x++) {
+			delete [] this->tablica[x];
 		}
-		//cout << "Usuwam cala tablice o adr.:" << this->tablica << endl;
 		delete [] this->tablica;
 	}
 
 	this->rozmiarX = nowyRozmiarX;
 	this->rozmiarY = nowyRozmiarY;
 	tablica = tabelka.tablica;
-/* //OK! odkryłem segf. - w ponizszej petli sa usuwane wiersze potem uzywane jako tablica!
-	for(int y=0; y<nowyRozmiarY; y++) {
-		cout<<"Usuwam "<<y<<" wiersz tabelki o adr.: "<<tabelka.tablica[y]<<endl;
-		delete [] tabelka.tablica[y];
-	}*/
+
 	return 0;
 }
 
@@ -243,7 +246,7 @@ int Tablica::zapiszTablice(string nazwaPliku) {
 	plik.open(nazwaPliku.c_str()); //Konwersja nazwy pliku na c-string - wymaganie	funkcji open()
 	plik << rozmiarX << endl << rozmiarY << endl;
 	for(int x=0; x<rozmiarX; y++) {
-		plik << tablica[x][y].typ << "\t";
+		plik << typyKolumn[x] << "\t";
 	}
 	plik << endl;
 
@@ -326,22 +329,7 @@ int Tablica::zmienTypKolumny(int kolumna, std::string nowyTyp) {
 
 int Tablica::zmienTypTablicy(std::string nowyTyp) {
 	for(int x=0; x<rozmiarX; x++) {
-		if(tablica[x] != NULL) delete [] tablica[x];
-		tablica[x] = NULL;
-		
-		if(nowyTyp == "int") {
-			tablica[x] = new KomorkaLiczbowa[rozmiarY];
-		} else if(nowyTyp == "string") {
-			tablica[x] = new KomorkaTekstowa[rozmiarY];
-		}
-
-		for(int y=0; y<rozmiarY; y++) {
-			if(nowyTyp == "int") {
-				tablica[x][y].ustaw(0);
-			} else if(nowyTyp == "string") {
-				tablica[x][y].ustaw("nic");
-			}
-		}
+		zmienTypKolumny(x, nowyTyp);
 	}
 	return 0;
 }

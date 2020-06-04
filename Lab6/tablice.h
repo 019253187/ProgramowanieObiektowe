@@ -6,13 +6,12 @@
 /**@class Komorka
  * @brief Klasa podstawowa dla poszczegolnych rodzajow Komorek
  *
- * @var typ String reprezentujacy typ danej komorki
  */
 class Komorka {
 public:
-	virtual std::string typ;
 	virtual int ustaw(int wartosc) = 0;
 	virtual int ustaw(std::string wartosc) = 0;
+	virtual ~Komorka() {};
 };
 
 /**@class KomorkaLiczbowa
@@ -23,7 +22,6 @@ public:
  */
 class KomorkaLiczbowa: public Komorka {
 public:
-	std::string typ;
 	KomorkaLiczbowa();
 	int ustaw(int wartosc);
 	int zwroc();
@@ -34,12 +32,11 @@ private:
 /**@class KomorkaTekstowa
  * @brief Klasa reprezentujaca Komorke zawierajaca wartosc typu string
  *
- * @var typ String reprezentujacy typ danej komorki(tu zawsze "string")
+ * @var typ String reprezentujacy typ danej komorki(tu zawsze "string") - do usuniecia
  * @var zawartosc Zawartosc komorki(ciąg znaków typu string)
  */
 class KomorkaTekstowa: public Komorka {
 public:
-	std::string typ;
 	KomorkaTekstowa();
 	int ustaw(std::string wartosc);
 	std::string zwroc();
@@ -92,7 +89,7 @@ public:
 	/**
 	 * Tworzy nowa tablice o podanym rozmiarze i kopiuje zawartosc starej tablicy
 	 * do nowej na tyle, na ile to mozliwe. Komorki ponad rozmiar starej tablicy sa
-	 * inicjalizowane jako "0". Stara tablica jest usuwana.
+	 * inicjalizowane jako komorki liczbowe o wartości "0". Stara tablica jest usuwana. 
 	 *
 	 * @param nowyRozmiarX Ilosc kolumn w nowej tablicy
 	 * @param nowyRozmiarY Ilosc wierszy w nowej tablicy
