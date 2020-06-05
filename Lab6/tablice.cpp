@@ -318,10 +318,10 @@ int Tablica::otworzTablice(string nazwaPliku) {
 	int odczytano_kolumn = 0;
 	if(dane.is_open()) {
 		cout << "Pomyslnie otworzono plik \"" << nazwaPliku << "\"." << endl;
-		dane >> odczytano_wierszy;
-		cout << "Odczytano ilosc wierszy: " << odczytano_wierszy << endl;
 		dane >> odczytano_kolumn;
 		cout << "Odczytano ilosc kolumn: " << odczytano_kolumn << endl;
+		dane >> odczytano_wierszy;
+		cout << "Odczytano ilosc wierszy: " << odczytano_wierszy << endl;
 
 		if(!(odczytano_wierszy > 0) || (!(odczytano_kolumn > 0))) {
 			return -1;
@@ -333,7 +333,8 @@ int Tablica::otworzTablice(string nazwaPliku) {
 			dane >> typyKolumn[x];
 		}
 		this->utworzTablice(odczytano_kolumn, odczytano_wierszy, typyKolumn);
-		
+		this->rozmiarX = odczytano_kolumn;
+		this->rozmiarY = odczytano_wierszy;
 		for(int y=0; y<rozmiarY; y++) {
 			for(int x=0; x<rozmiarX; x++) {
 				if(typyKolumn[x] == "int") {
