@@ -55,7 +55,7 @@ Tablica::Tablica() {
 }
 
 int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
-	cout << "Tablica::utworzTablice():"<<endl;
+	//cout << "Tablica::utworzTablice():"<<endl;
 	if(this->tablica != NULL) {
 		//cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
 		for(int x=0; x<this->rozmiarX; x++) {
@@ -85,12 +85,10 @@ int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
 		for(int y = 0; y<rozmiarY; y++) {
 			if(typyKolumn[x] == "int") {
 				tablica[x][y] = new KomorkaLiczbowa;
-				cout << "New KomorkaLiczbowa("<<x<<","<<y<<") at "<<tablica[x][y];
-				//cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << tablica[x] << endl;
+				//cout << "New KomorkaLiczbowa("<<x<<","<<y<<") at "<<tablica[x][y];
 			} else if(typyKolumn[x] == "string") {
 				tablica[x][y] = new KomorkaTekstowa;
-				cout << "New KomorkaTekstowa("<<x<<","<<y<<") at "<<tablica[x][y];
-				//cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << tablica[x] << endl;
+				//cout << "New KomorkaTekstowa("<<x<<","<<y<<") at "<<tablica[x][y];
 			} else {
 				tablica[x][y] = NULL;
 				//cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
@@ -151,7 +149,7 @@ int Tablica::wyswietlTablice(void) {
 	for(int y=0; y<rozmiarY; y++) {
 		//cout << "Adres kolumny "<<x<<". = "<< &tablica[x];
 		for(int x=0; x<rozmiarX; x++) {
-			cout << tablica[x][y] << " = ";
+			//cout << tablica[x][y] << " = ";
 			cout << tablica[x][y]->zwroc() << "\t";
 		}
 		cout << endl;
@@ -327,28 +325,24 @@ int Tablica::otworzTablice(string nazwaPliku) {
 		if(!(odczytano_wierszy > 0) || (!(odczytano_kolumn > 0))) {
 			return -1;
 		}
-
-		if(typyKolumn != NULL) delete [] typyKolumn;
-		typyKolumn = new string[odczytano_kolumn];
+		string* noweTypyKolumn = new string[odczytano_kolumn];
 		for(int x=0; x<odczytano_kolumn; x++) {
 			string biezacyTyp;
 			dane >> biezacyTyp;
 			if(biezacyTyp == "int" || biezacyTyp == "string") {
-				typyKolumn[x] = biezacyTyp;
+				noweTypyKolumn[x] = biezacyTyp;
 			} else return -1;
 		}
-		this->utworzTablice(odczytano_kolumn, odczytano_wierszy, typyKolumn);
+		this->utworzTablice(odczytano_kolumn, odczytano_wierszy, noweTypyKolumn);
 		this->rozmiarX = odczytano_kolumn;
 		this->rozmiarY = odczytano_wierszy;
 		for(int y=0; y<rozmiarY; y++) {
 			for(int x=0; x<rozmiarX; x++) {
-				if(typyKolumn[x] == "int") {
+				if(noweTypyKolumn[x] == "int") {
 					int biezacaKomorka;
 					dane >> biezacaKomorka;
 					tablica[x][y]->ustaw(biezacaKomorka);
-				}
-
-				if(typyKolumn[x] == "string") {
+				} else if(noweTypyKolumn[x] == "string") {
 					string biezacaKomorka;
 					dane >> biezacaKomorka;
 					tablica[x][y]->ustaw(biezacaKomorka);
@@ -373,18 +367,18 @@ int Tablica::zmienTypKolumny(int kolumna, std::string nowyTyp) {
 		delete [] this->tablica[kolumna];
 	}
 	this->tablica[kolumna] = new Komorka*[rozmiarY];
-		for(int y = 0; y<rozmiarY; y++) {
-			if(nowyTyp == "int") {
-				tablica[kolumna][y] = new KomorkaLiczbowa;
-				cout << "Zmieniam typ kolumny " << kolumna << ". na liczbowa adr.:" << tablica[kolumna] << endl;
-			} else if(nowyTyp == "string") {
-				tablica[kolumna][y] = new KomorkaTekstowa;
-				cout << "Zmieniam typ kolumny " << kolumna << ". na tekstowa o adr.:" << tablica[kolumna] << endl;
-			} else {
-				tablica[kolumna][y] = NULL;
-				cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << kolumna << "!";
-			}
+	for(int y = 0; y<rozmiarY; y++) {
+		if(nowyTyp == "int") {
+			tablica[kolumna][y] = new KomorkaLiczbowa;
+			cout << "Zmieniam typ kolumny " << kolumna << ". na liczbowa adr.:" << tablica[kolumna] << endl;
+		} else if(nowyTyp == "string") {
+			tablica[kolumna][y] = new KomorkaTekstowa;
+			cout << "Zmieniam typ kolumny " << kolumna << ". na tekstowa o adr.:" << tablica[kolumna] << endl;
+		} else {
+			tablica[kolumna][y] = NULL;
+			cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << kolumna << "!";
 		}
+	}
 	typyKolumn[kolumna] = nowyTyp;
 	for(int y=0; y<rozmiarY; y++) {
 		if(nowyTyp == "int") {
