@@ -69,29 +69,29 @@ int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
 		delete [] typyKolumn;
 	}
 	this->rozmiarX = rozmiarX;
-	cout << "Ustawiono rozmiar X" << (this->rozmiarX) << " w " << &(this->rozmiarX) << endl;
+	//cout << "Ustawiono rozmiar X" << (this->rozmiarX) << " w " << &(this->rozmiarX) << endl;
 	this->rozmiarY = rozmiarY;
-	cout << "Ustawiono rozmiar Y" << (this->rozmiarY) << " w " << &(this->rozmiarY) << endl;
+	//cout << "Ustawiono rozmiar Y" << (this->rozmiarY) << " w " << &(this->rozmiarY) << endl;
 	typyKolumn = new string[rozmiarX];
-	cout << "Stworzono nowa tablice typow kolumn o adr.: " << typyKolumn << endl; 
+	//cout << "Stworzono nowa tablice typow kolumn o adr.: " << typyKolumn << endl; 
 	tablica = new Komorka**[rozmiarX];
-	cout << "Stworzono nowa tablice kolumn o adr.: " << tablica <<", & to " << &tablica << endl; 
+	//cout << "Stworzono nowa tablice kolumn o adr.: " << tablica <<", & to " << &tablica << endl; 
 	for(int x=0; x<(this->rozmiarX); x++) {
-		cout << "tablica[" << x<<"] = " << tablica[x] << ", & =" << &tablica[x] << endl;
+		//cout << "tablica[" << x<<"] = " << tablica[x] << ", & =" << &tablica[x] << endl;
 		//tablica[x] = NULL;
 		typyKolumn[x] = noweTypyKolumn[x];
-		cout << "Ustawiono typ " << x << ". kolumny na " << this->typyKolumn[x] << endl;
+		//cout << "Ustawiono typ " << x << ". kolumny na " << this->typyKolumn[x] << endl;
 		tablica[x] = new Komorka*[rozmiarY];
 		for(int y = 0; y<rozmiarY; y++) {
 			if(typyKolumn[x] == "int") {
 				tablica[x][y] = new KomorkaLiczbowa;
-				cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << tablica[x] << endl;
+				//cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << tablica[x] << endl;
 			} else if(typyKolumn[x] == "string") {
 				tablica[x][y] = new KomorkaTekstowa;
-				cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << tablica[x] << endl;
+				//cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << tablica[x] << endl;
 			} else {
 				tablica[x][y] = NULL;
-				cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
+				//cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
 			}
 		}
 		//Poniższe zakomentowałem gdyż w sumie oddzielna inicjalizacja w tej funkcji
@@ -145,9 +145,9 @@ int Tablica::wyswietlTablice(void) {
 	cout << rozmiarX << " kolumn na "; 
 	cout << rozmiarY << " wierszy:" << endl;
 	//cout << "Adres tablicy: "<<tablica<< " & =" << &tablica << endl;
-	for(int x=0; x<rozmiarX; x++) {
+	for(int y=0; y<rozmiarX; y++) {
 		//cout << "Adres kolumny "<<x<<". = "<< &tablica[x];
-		for(int y=0; y<rozmiarY; y++) {
+		for(int x=0; x<rozmiarY; x++) {
 			//cout << &(tablica[x][y]) << " = ";
 			cout << tablica[x][y]->zwroc() << "\t";
 		}
