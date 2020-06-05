@@ -207,7 +207,7 @@ float pobierzFloat() {
 string pobierzTyp() {
 	string podanyTyp = "nic";
 	cin >> podanyTyp;
-	while(podanyTyp != "int" || podanyTyp != "string") {
+	while(!(podanyTyp == "int" || podanyTyp == "string")) {
 		wyswietlKomunikat(-9);
 		cin.clear();
 		cin.ignore(256, '\n');
@@ -239,7 +239,7 @@ void uruchomMenu(Tablica tablica) {
 				}
 				string* doceloweTypy = new string[nowyRozmiarX];
 				for(int x = 0; x < nowyRozmiarX; x++) {
-					wyswietlKomunikat(53);
+					wyswietlKomunikat(53, x);
 					doceloweTypy[x] = pobierzTyp();
 				}
 				tablica.utworzTablice(nowyRozmiarX, nowyRozmiarY, doceloweTypy);
@@ -401,12 +401,20 @@ void uruchomMenu(Tablica tablica) {
 				break;
 			}
 			case 15: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
 				wyswietlKomunikat(52);
 				string nowyTyp = pobierzTyp();
 				tablica.zmienTypTablicy(nowyTyp);
 				break;
 			}
 			case 16: {
+				if(tablica.rozmiarX<=0 || tablica.rozmiarY<=0) {
+					wyswietlKomunikat(-1);
+					break;
+				}
 				wyswietlKomunikat(16);
 				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				wyswietlKomunikat(53, adresX);

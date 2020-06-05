@@ -101,7 +101,7 @@ int Tablica::zmienKomorke(int xKomorki, int yKomorki, int nowaZawartosc) {
 		return -3;
 	}
 
-	tablica[yKomorki][xKomorki].ustaw(nowaZawartosc);
+	tablica[xKomorki][yKomorki].ustaw(nowaZawartosc);
 	return 0;
 }
 
@@ -116,7 +116,7 @@ int Tablica::zmienKomorke(int xKomorki, int yKomorki, string nowaZawartosc) {
 		return -3;
 	}
 
-	tablica[yKomorki][xKomorki].ustaw(nowaZawartosc);
+	tablica[xKomorki][yKomorki].ustaw(nowaZawartosc);
 	return 0;
 }
 
@@ -163,13 +163,13 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 			if(typyKolumn[x] == "string") {
 				for(int y=0; y<nowyRozmiarY; y++) {
 					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
-						tabelka.tablica[y][x].ustaw(tablica[y][x].zwroc());
+						tabelka.tablica[x][y].ustaw(tablica[x][y].zwroc());
 					}
 				}
 			} else if(typyKolumn[x] == "int") {
 				for(int y=0; y<nowyRozmiarY; y++) {
 					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
-						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt());
+						tabelka.tablica[x][y].ustaw(tablica[x][y].zwrocInt());
 					}
 				}
 			} else {	
@@ -196,7 +196,7 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 float Tablica::sumujWiersz(int wiersz) {
 	float suma = 0;
 	for(int x=0; x<rozmiarX; x++) {
-		suma += (float)tablica[wiersz][x].zwrocInt();
+		suma += (float)tablica[x][wiersz].zwrocInt();
 	}
 	return suma;
 }
@@ -204,26 +204,26 @@ float Tablica::sumujWiersz(int wiersz) {
 float Tablica::sumujKolumne(int kolumna) {
 	float suma = 0;
 	for(int y=0; y<rozmiarY; y++) {
-		suma += (float)tablica[y][kolumna].zwrocInt();
+		suma += (float)tablica[kolumna][y].zwrocInt();
 	}
 	return suma;
 }
 
 float Tablica::minimumWiersza(int wiersz) {
-	float minimum = (float) tablica[wiersz][0].zwrocInt();
+	float minimum = (float) tablica[0][wiersz].zwrocInt();
 	for(int x=0; x<rozmiarX; x++) {
-		if(minimum > (float)tablica[wiersz][x].zwrocInt()) {
-			minimum =(float) tablica[wiersz][x].zwrocInt();;
+		if(minimum > (float)tablica[x][wiersz].zwrocInt()) {
+			minimum =(float) tablica[x][wiersz].zwrocInt();;
 		}
 	}
 	return minimum;
 }
 
 float Tablica::maksimumWiersza(int wiersz) {
-	float maksimum =(float) tablica[wiersz][0].zwrocInt();
+	float maksimum =(float) tablica[0][wiersz].zwrocInt();
 	for(int x=0; x<rozmiarX; x++) {
-		if(maksimum < (float)tablica[wiersz][x].zwrocInt()) {
-			maksimum =(float) tablica[wiersz][x].zwrocInt();
+		if(maksimum < (float)tablica[x][wiersz].zwrocInt()) {
+			maksimum =(float) tablica[x][wiersz].zwrocInt();
 		}
 	}
 	return maksimum;
@@ -236,20 +236,20 @@ float Tablica::sredniaWiersza(int wiersz) {
 }
 
 float Tablica::minimumKolumny(int kolumna) {
-	float minimum = (float)tablica[0][kolumna].zwrocInt();
+	float minimum = (float)tablica[kolumna][0].zwrocInt();
 	for(int y=0; y<rozmiarY; y++) {
-		if(minimum > (float)tablica[y][kolumna].zwrocInt()) {
-			minimum = (float)tablica[y][kolumna].zwrocInt();
+		if(minimum > (float)tablica[kolumna][y].zwrocInt()) {
+			minimum = (float)tablica[kolumna][y].zwrocInt();
 		}
 	}
 	return minimum;
 }
 
 float Tablica::maksimumKolumny(int kolumna) {
-	float maksimum = (float)tablica[0][kolumna].zwrocInt();
+	float maksimum = (float)tablica[kolumna][0].zwrocInt();
 	for(int y=0; y<rozmiarY; y++) {
-		if(maksimum < (float)tablica[y][kolumna].zwrocInt()) {
-			maksimum = (float)tablica[y][kolumna].zwrocInt();
+		if(maksimum < (float)tablica[kolumna][y].zwrocInt()) {
+			maksimum = (float)tablica[kolumna][y].zwrocInt();
 		}
 	}
 	return maksimum;
@@ -308,13 +308,13 @@ int Tablica::otworzTablice(string nazwaPliku) {
 				if(typyKolumn[x] == "int") {
 					int biezacaKomorka;
 					dane >> biezacaKomorka;
-					tablica[y][x].ustaw(biezacaKomorka);
+					tablica[x][y].ustaw(biezacaKomorka);
 				}
 
 				if(typyKolumn[x] == "string") {
 					string biezacaKomorka;
 					dane >> biezacaKomorka;
-					tablica[y][x].ustaw(biezacaKomorka);
+					tablica[x][y].ustaw(biezacaKomorka);
 				}
 			}
 		}
