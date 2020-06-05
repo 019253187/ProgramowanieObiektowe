@@ -54,8 +54,10 @@ Tablica::Tablica() {
 	typyKolumn = NULL;
 }
 
-int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string typyKolumn[]) {
+int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* typyKolumn) {
+	cout << "Tablica::utworzTablice():"<<endl;
 	if(this->tablica != NULL) {
+		cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
 		for(int x=0; x<this->rozmiarX; x++) {
 			delete [] this->tablica[x];
 		}
@@ -64,16 +66,23 @@ int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string typyKolumn[]) {
 		delete [] this->typyKolumn;
 	}
 	this->rozmiarX = rozmiarX;
+	cout << "Ustawiono rozmiar X" << (this->rozmiarX) << " w " << &(this->rozmiarX) << endl;
 	this->rozmiarY = rozmiarY;
+	cout << "Ustawiono rozmiar Y" << (this->rozmiarY) << " w " << &(this->rozmiarY) << endl;
 	this->typyKolumn = new string[rozmiarX];
+	cout << "Stworzono nowa tablice typow kolumn o adr.: " << this->typyKolumn << endl; 
 	this->tablica = new Komorka*[rozmiarX];
+	cout << "Stworzono nowa tablice kolumn o adr.: " << this->tablica << endl; 
 	for(int x=0; x<(this->rozmiarX); x++) {
 		this->tablica[x] = NULL;
 		this->typyKolumn[x] = typyKolumn[x];
+		cout << "Ustawiono typ " << x << ". kolumny na " << this->typyKolumn[x] << endl;
 		if(typyKolumn[x] == "int") {
 			this->tablica[x] = new KomorkaLiczbowa[rozmiarY];
+			cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << &this->tablica[x] << endl;
 		} else if(typyKolumn[x] == "string") {
 			this->tablica[x] = new KomorkaTekstowa[rozmiarY];
+			cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << &this->tablica[x] << endl;
 		} else {
 			cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
 		}
@@ -127,14 +136,18 @@ int Tablica::wyswietlTablice(void) {
 	cout << "Oto twoja tablica o rozmiarze ";
 	cout << rozmiarX << " kolumn na "; 
 	cout << rozmiarY << " wierszy:" << endl;
+	cout << "Adres tablicy: " << &tablica << endl;
 	for(int x=0; x<rozmiarX; x++) {
+		cout << "Adres kolumny "<<x<<". = "<<&tablica[x];
 		for(int y=0; y<rozmiarY; y++) {
+			cout << &tablica[x][y] << " = ";
 			cout << tablica[x][y].zwroc() << "\t";
 		}
 		cout << endl;
 	}
 
-	for(int x; x<rozmiarX; x++) {
+	for(int x = 0; x<rozmiarX; x++) {
+		cout << "Adres listy typow kolumn:" << typyKolumn << endl;
 		cout << typyKolumn[x] << "\t";
 	}
 	cout << endl;
