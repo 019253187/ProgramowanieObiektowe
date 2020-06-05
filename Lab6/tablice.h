@@ -11,7 +11,8 @@ class Komorka {
 public:
 	virtual int ustaw(int wartosc) = 0;
 	virtual int ustaw(std::string wartosc) = 0;
-	virtual ~Komorka() {};
+	virtual int zwrocInt() = 0;
+	virtual std::string zwroc() = 0;
 };
 
 /**@class KomorkaLiczbowa
@@ -24,10 +25,12 @@ class KomorkaLiczbowa: public Komorka {
 public:
 	KomorkaLiczbowa();
 	int ustaw(int wartosc);
-	int zwroc();
+	int ustaw(std::string wartosc);
+	int zwrocInt();
+	std::string zwroc();
 private:
 	int zawartosc;
-}
+};
 
 /**@class KomorkaTekstowa
  * @brief Klasa reprezentujaca Komorke zawierajaca wartosc typu string
@@ -39,10 +42,12 @@ class KomorkaTekstowa: public Komorka {
 public:
 	KomorkaTekstowa();
 	int ustaw(std::string wartosc);
+	int ustaw(int wartosc);
+	int zwrocInt();
 	std::string zwroc();
 private:
 	std::string zawartosc;
-}
+};
 
 /**@class Tablica
  * @brief Klasa sluzaca do wygodnego przechowywania i obslugi tablic
@@ -70,7 +75,7 @@ public:
 	 * @param rozmiarY ilosc wierszy
 	 * @return 0 lub kod błędu
 	 */
-	int utworzTablice(int rozmiarX, int rozmiarY, std::string typyKolumn);
+	int utworzTablice(int rozmiarX, int rozmiarY, std::string typyKolumn[]);
 
 	/**
 	 * Zmienia zawartosc wybranej komorki w tablicy.

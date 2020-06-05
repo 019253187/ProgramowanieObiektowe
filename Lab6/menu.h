@@ -36,6 +36,16 @@ int pobierzInt(bool ograniczona, int zakresMin, int zakresMax);
 float pobierzFloat();
 
 /**
+ * Wewnetrzna funkcja uzywana przez menu.cpp
+ * Pobiera zadany typ danych od uzytkownika, sprawdzajac czy jest on jednym
+ * z dopuszczonych typow(int, string)
+ *
+ * @return String informujacy o wybranym typie danych
+ */
+
+std::string pobierzTyp();
+
+/**
  * Glowna funkcja do uruchamiania menu.
  * 
  * @param tablica Tablica robocza

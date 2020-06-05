@@ -21,15 +21,17 @@ void wyswietlMenu() {
 	cout << "13. Zapisz tablice do pliku" << endl;
 	cout << "14. Odczytaj tablice z pliku" << endl;
 	cout << "15. Zmien typ wszystkich komorek w tablicy" << endl;
-	cout << "16. Zmien typ calego wybranego wiersza" << endl;
-	cout << "17. Zmien typ calej wybranej kolumny" << endl;
-	cout << "18. Zakoncz program" << endl;
+	cout << "16. Zmien typ calej wybranej kolumny" << endl;
+	cout << "17. Zakoncz program" << endl;
 
 	cout << "Podaj swoj wybor: ";
 }
 
 void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjonalnaLiczba2 = -42, float opcjonalnaLiczba3 = 4.20) {
 	switch(nrKomunikatu) {
+		case -9:
+			cout << "Error. Podaj typ \"int\" albo \"string\": ";
+			break;
 		case -8:
 			cout << "Przepraszam, ta funkcja nie jest jeszcze zaimplementowana." << endl;
 			break;
@@ -76,10 +78,6 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 		case 31:
 			cout << "Podaj wspolrzedna Y komorki, ktora chcesz zmienic: ";
 			break;
-		case 40:
-			cout << "Dostepne typy to: int float string" << endl;
-			cout << "Podaj, na jaki typ ustawic komorke: " << endl;
-			break;
 		case 4:
 			cout << "Podaj nowa zawartosc elementu (" << opcjonalnaLiczba1;
 			cout << "," << opcjonalnaLiczba2 << "): ";
@@ -109,8 +107,8 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 			break;
 		case 8:
 			cout << "Nowy rozmiar tablicy jest wiekszy od starego." << endl;
-			cout << "Nowe elementy (od " << opcjonalnaLiczba1;
-			cout << ". wzwyz) zostana zainicjalizowane z zawartoscia 0." << endl;
+			cout << "Nowe kolumny (od " << opcjonalnaLiczba1;
+			cout << ". wzwyz) zostana zainicjalizowane jako int(0)." << endl;
 			break;
 		case 10:
 			cout << "Zycze zdrowia." << endl;
@@ -151,6 +149,7 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 			cout << "Ktory wiersz? ";
 			break;
 		case 16:
+			cout << "UWAGA: Wybrana kolumna zostanie zainicjalizowana od nowa." << endl;
 			cout << "Ktora kolumna? ";
 			break;
 		case 100:
@@ -205,6 +204,19 @@ float pobierzFloat() {
 	return pobranaLiczba;
 }
 
+string pobierzTyp() {
+	string podanyTyp = "nic";
+	cin >> podanyTyp;
+	while(podanyTyp != "int" || podanyTyp != "string") {
+		wyswietlKomunikat(-9);
+		cin.clear();
+		cin.ignore(256, '\n');
+		cin >> podanyTyp;
+	}
+
+	return podanyTyp;
+}
+
 void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
@@ -225,8 +237,12 @@ void uruchomMenu(Tablica tablica) {
 					wyswietlKomunikat(-6);
 					nowyRozmiarX = pobierzInt();
 				}
-				
-				tablica.utworzTablice(nowyRozmiarX, nowyRozmiarY);
+				string* doceloweTypy = new string[nowyRozmiarX];
+				for(int x = 0; x < nowyRozmiarX; x++) {
+					wyswietlKomunikat(53);
+					doceloweTypy[x] = pobierzTyp();
+				}
+				tablica.utworzTablice(nowyRozmiarX, nowyRozmiarY, doceloweTypy);
 				break;
 			}
 			case 2: {
@@ -238,27 +254,14 @@ void uruchomMenu(Tablica tablica) {
 				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				wyswietlKomunikat(31);
 				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
-				
-				string docelowyTyp = "nic";
-				wyswietlKomunikat(40);
-				cin >> docelowyTyp;
 				wyswietlKomunikat(4, adresX, adresY);
-
-				if(docelowyTyp == "int") {
+				if(tablica.typyKolumn[adresX] == "int") {
 					int nowaZawartosc = pobierzInt();
-					tablica.zmienTypKomorki(adresX, adresY, docelowyTyp);
 					tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
-				} else if(docelowyTyp == "float") {
-					float nowaZawartosc = pobierzFloat();
-					tablica.zmienTypKomorki(adresX, adresY, docelowyTyp);
-					tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
-				} else if(docelowyTyp == "string") {
+				} else if (tablica.typyKolumn[adresX] == "string") {
 					string nowaZawartosc = "pusta";
 					cin >> nowaZawartosc;
-					tablica.zmienTypKomorki(adresX, adresY, docelowyTyp);
 					tablica.zmienKomorke(adresX, adresY, nowaZawartosc);
-				} else {
-					wyswietlKomunikat(-7);
 				}
 				break;
 			}
@@ -270,26 +273,21 @@ void uruchomMenu(Tablica tablica) {
 				break;
 			}
 			case 4: {
-				wyswietlKomunikat(51);
-				int nowyRozmiarY = pobierzInt();
-				while(nowyRozmiarY<=0) {
-					wyswietlKomunikat(-6);
-					nowyRozmiarY = pobierzInt();
-				}
-
 				wyswietlKomunikat(5);
 				int nowyRozmiarX = pobierzInt();
 				while(nowyRozmiarX<=0) {
 					wyswietlKomunikat(-6);
 					nowyRozmiarX = pobierzInt();
 				}
-				/*if(nowyRozmiar<(*rozmiarTablicy)) {
-					wyswietlKomunikat(6, nowyRozmiar, *rozmiarTablicy);
-				} else if(nowyRozmiar == (*rozmiarTablicy)) {
-					wyswietlKomunikat(7);
-				} else {
-					wyswietlKomunikat(8, *rozmiarTablicy);
-				}*/
+				wyswietlKomunikat(51);
+				int nowyRozmiarY = pobierzInt();
+				while(nowyRozmiarY<=0) {
+					wyswietlKomunikat(-6);
+					nowyRozmiarY = pobierzInt();
+				}
+				if(nowyRozmiarX>tablica.rozmiarX) {
+					wyswietlKomunikat(8);
+				}
 				int zwrot = tablica.zmianaRozmiaru(nowyRozmiarX, nowyRozmiarY);
 				if(zwrot) {
 					wyswietlKomunikat(zwrot);
@@ -404,39 +402,16 @@ void uruchomMenu(Tablica tablica) {
 			}
 			case 15: {
 				wyswietlKomunikat(52);
-				string nowyTyp = "nic";
-				cin >> nowyTyp;
-				if(nowyTyp == "int" || nowyTyp == "float" || nowyTyp == "string") {
-					tablica.zmienTypTablicy(nowyTyp);
-				} else {
-					wyswietlKomunikat(-7);
-				}
+				string nowyTyp = pobierzTyp();
+				tablica.zmienTypTablicy(nowyTyp);
 				break;
 			}
 			case 16: {
-				wyswietlKomunikat(15);
-				int adresY = pobierzInt(true, 0, (tablica.rozmiarY-1));
-				wyswietlKomunikat(54, adresY);
-				string nowyTyp = "nic";
-				cin >> nowyTyp;
-				if(nowyTyp == "int" || nowyTyp == "float" || nowyTyp == "string") {
-					tablica.zmienTypWiersza(adresY, nowyTyp);
-				} else {
-					wyswietlKomunikat(-7);
-				}
-				break;
-			}
-			case 17: {
 				wyswietlKomunikat(16);
 				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				wyswietlKomunikat(53, adresX);
-				string nowyTyp = "nic";
-				cin >> nowyTyp;
-				if(nowyTyp == "int" || nowyTyp == "float" || nowyTyp == "string") {
-					tablica.zmienTypKolumny(adresX, nowyTyp);
-				} else {
-					wyswietlKomunikat(-7);
-				}
+				string nowyTyp = pobierzTyp();
+				tablica.zmienTypKolumny(adresX, nowyTyp);
 				break;
 			}
 			default:

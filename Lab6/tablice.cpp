@@ -6,7 +6,6 @@
 using namespace std;
 
 KomorkaLiczbowa::KomorkaLiczbowa() {
-	typ = "int";
 	zawartosc = 0;
 }
 
@@ -15,17 +14,32 @@ int KomorkaLiczbowa::ustaw(int wartosc) {
 	return 0;
 }
 
-int KomorkaLiczbowa::zwroc() {
+int KomorkaLiczbowa::ustaw(string wartosc) {
+	return -1;
+}
+
+int KomorkaLiczbowa::zwrocInt() {
 	return zawartosc;
 }
 
+string KomorkaLiczbowa::zwroc() {
+	return to_string(zawartosc);
+}
+
 KomorkaTekstowa::KomorkaTekstowa() {
-	typ = "string";
 	zawartosc = "0";
 }
 
 int KomorkaTekstowa::ustaw(string wartosc) {
 	zawartosc = wartosc;
+	return 0;
+}
+
+int KomorkaTekstowa::ustaw(int wartosc) {
+	return -1;
+}
+
+int KomorkaTekstowa::zwrocInt() {
 	return 0;
 }
 
@@ -40,7 +54,7 @@ Tablica::Tablica() {
 	typyKolumn = NULL;
 }
 
-int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string[] typyKolumn) {
+int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string typyKolumn[]) {
 	if(this->tablica != NULL) {
 		for(int x=0; x<this->rozmiarX; x++) {
 			delete [] this->tablica[x];
@@ -146,10 +160,16 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 	
 	for(int x=0; x<nowyRozmiarX; x++) {
 		if(x<rozmiarX) {
-			if(typyKolumn[x] == "int" || typyKolumn[x] == "string") {
+			if(typyKolumn[x] == "string") {
 				for(int y=0; y<nowyRozmiarY; y++) {
 					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
 						tabelka.tablica[y][x].ustaw(tablica[y][x].zwroc());
+					}
+				}
+			} else if(typyKolumn[x] == "int") {
+				for(int y=0; y<nowyRozmiarY; y++) {
+					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
+						tabelka.tablica[y][x].ustaw(tablica[y][x].zwrocInt());
 					}
 				}
 			} else {	
@@ -176,7 +196,7 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 float Tablica::sumujWiersz(int wiersz) {
 	float suma = 0;
 	for(int x=0; x<rozmiarX; x++) {
-		suma += (float)tablica[wiersz][x].zwroc();
+		suma += (float)tablica[wiersz][x].zwrocInt();
 	}
 	return suma;
 }
@@ -184,26 +204,26 @@ float Tablica::sumujWiersz(int wiersz) {
 float Tablica::sumujKolumne(int kolumna) {
 	float suma = 0;
 	for(int y=0; y<rozmiarY; y++) {
-		suma += (float)tablica[y][kolumna].zwroc();
+		suma += (float)tablica[y][kolumna].zwrocInt();
 	}
 	return suma;
 }
 
 float Tablica::minimumWiersza(int wiersz) {
-	float minimum =(float) tablica[wiersz][0].zwroc();
+	float minimum = (float) tablica[wiersz][0].zwrocInt();
 	for(int x=0; x<rozmiarX; x++) {
-		if(minimum(float)>tablica[wiersz][x].zwroc()) {
-			minimum =(float) tablica[wiersz][x].zwroc();;
+		if(minimum > (float)tablica[wiersz][x].zwrocInt()) {
+			minimum =(float) tablica[wiersz][x].zwrocInt();;
 		}
 	}
 	return minimum;
 }
 
 float Tablica::maksimumWiersza(int wiersz) {
-	float maksimum =(float) tablica[wiersz][0].zwroc();
+	float maksimum =(float) tablica[wiersz][0].zwrocInt();
 	for(int x=0; x<rozmiarX; x++) {
-		if(maksimum(float)<tablica[wiersz][x].zwroc()) {
-			maksimum =(float) tablica[wiersz][x].zwroc();
+		if(maksimum < (float)tablica[wiersz][x].zwrocInt()) {
+			maksimum =(float) tablica[wiersz][x].zwrocInt();
 		}
 	}
 	return maksimum;
@@ -216,20 +236,20 @@ float Tablica::sredniaWiersza(int wiersz) {
 }
 
 float Tablica::minimumKolumny(int kolumna) {
-	float minimum = (float)tablica[0][kolumna].zwroc();
+	float minimum = (float)tablica[0][kolumna].zwrocInt();
 	for(int y=0; y<rozmiarY; y++) {
-		if(minimum>(float)tablica[y][kolumna].zwroc()) {
-			minimum = (float)tablica[y][kolumna].zwroc();
+		if(minimum > (float)tablica[y][kolumna].zwrocInt()) {
+			minimum = (float)tablica[y][kolumna].zwrocInt();
 		}
 	}
 	return minimum;
 }
 
 float Tablica::maksimumKolumny(int kolumna) {
-	float maksimum = (float)tablica[0][kolumna].zwroc();
+	float maksimum = (float)tablica[0][kolumna].zwrocInt();
 	for(int y=0; y<rozmiarY; y++) {
-		if(maksimum<(float)tablica[y][kolumna].zwroc()) {
-			maksimum = (float)tablica[y][kolumna].zwroc();
+		if(maksimum < (float)tablica[y][kolumna].zwrocInt()) {
+			maksimum = (float)tablica[y][kolumna].zwrocInt();
 		}
 	}
 	return maksimum;
@@ -245,13 +265,13 @@ int Tablica::zapiszTablice(string nazwaPliku) {
 	ofstream plik;
 	plik.open(nazwaPliku.c_str()); //Konwersja nazwy pliku na c-string - wymaganie	funkcji open()
 	plik << rozmiarX << endl << rozmiarY << endl;
-	for(int x=0; x<rozmiarX; y++) {
+	for(int x=0; x<rozmiarX; x++) {
 		plik << typyKolumn[x] << "\t";
 	}
 	plik << endl;
 
-	for(int x=0; x<rozmiar; x++) {
-		for(int y=0; y<rozmiarX; y++) {
+	for(int x=0; x<rozmiarX; x++) {
+		for(int y=0; y<rozmiarY; y++) {
 			plik << tablica[x][y].zwroc() << "\t";
 		}
 		plik << endl;
@@ -278,7 +298,7 @@ int Tablica::otworzTablice(string nazwaPliku) {
 
 		if(typyKolumn != NULL) delete [] typyKolumn;
 		typyKolumn = new string[odczytano_kolumn];
-		for(int x=0; x<odczytano_kolumn; y++) {
+		for(int x=0; x<odczytano_kolumn; x++) {
 			dane >> typyKolumn[x];
 		}
 		this->utworzTablice(odczytano_kolumn, odczytano_wierszy, typyKolumn);
@@ -311,12 +331,14 @@ int Tablica::otworzTablice(string nazwaPliku) {
 int Tablica::zmienTypKolumny(int kolumna, std::string nowyTyp) {
 	if(tablica[kolumna] != NULL) delete [] tablica[kolumna];
 	tablica[kolumna] = NULL;
-	
 	if(nowyTyp == "int") {
 		tablica[kolumna] = new KomorkaLiczbowa[rozmiarY];
 	} else if(nowyTyp == "string") {
 		tablica[kolumna] = new KomorkaTekstowa[rozmiarY];
+	} else {
+		return -1;
 	}
+	typyKolumn[kolumna] = nowyTyp;
 	for(int y=0; y<rozmiarY; y++) {
 		if(nowyTyp == "int") {
 			tablica[kolumna][y].ustaw(0);
