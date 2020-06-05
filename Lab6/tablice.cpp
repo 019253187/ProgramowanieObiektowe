@@ -301,8 +301,8 @@ int Tablica::zapiszTablice(string nazwaPliku) {
 	}
 	plik << endl;
 
-	for(int x=0; x<rozmiarX; x++) {
-		for(int y=0; y<rozmiarY; y++) {
+	for(int y=0; y<rozmiarY; y++) {
+		for(int x=0; x<rozmiarX; x++) {
 			plik << tablica[x][y]->zwroc() << "\t";
 		}
 		plik << endl;
