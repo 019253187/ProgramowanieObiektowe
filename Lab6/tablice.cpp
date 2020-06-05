@@ -57,7 +57,7 @@ Tablica::Tablica() {
 int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
 	cout << "Tablica::utworzTablice():"<<endl;
 	if(this->tablica != NULL) {
-		cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
+		//cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
 		for(int x=0; x<this->rozmiarX; x++) {
 			for(int y = 0; y<this->rozmiarX; y++) {
 				delete this->tablica[x][y];
@@ -183,13 +183,13 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 		if(x<rozmiarX) {
 			if(typyKolumn[x] == "string") {
 				for(int y=0; y<nowyRozmiarY; y++) {
-					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
+					if(y<this->rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
 						tabelka.tablica[x][y]->ustaw(tablica[x][y]->zwroc());
 					}
 				}
 			} else if(typyKolumn[x] == "int") {
 				for(int y=0; y<nowyRozmiarY; y++) {
-					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
+					if(y<this->rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
 						tabelka.tablica[x][y]->ustaw(tablica[x][y]->zwrocInt());
 					}
 				}
@@ -201,7 +201,7 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 	}
 	//Usuniecie starej tablicy - zapobiezenie memleak
 	if(this->tablica != NULL) {
-		cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
+		//cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
 		for(int x=0; x<this->rozmiarX; x++) {
 			for(int y = 0; y<this->rozmiarX; y++) {
 				delete this->tablica[x][y];
@@ -215,6 +215,7 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 
 	this->rozmiarX = nowyRozmiarX;
 	this->rozmiarY = nowyRozmiarY;
+	this->typyKolumn = noweTypyKolumn;
 	tablica = tabelka.tablica;
 
 	return 0;
