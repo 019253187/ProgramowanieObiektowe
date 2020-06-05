@@ -151,8 +151,10 @@ void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjona
 		case 15:
 			cout << "Ktory wiersz? ";
 			break;
-		case 16:
+		case 160:
 			cout << "UWAGA: Wybrana kolumna zostanie zainicjalizowana od nowa." << endl;
+			break;
+		case 16:
 			cout << "Ktora kolumna? ";
 			break;
 		case 100:
@@ -421,6 +423,7 @@ void uruchomMenu(Tablica tablica) {
 					wyswietlKomunikat(-1);
 					break;
 				}
+				wyswietlKomunikat(160);
 				wyswietlKomunikat(16);
 				int adresX = pobierzInt(true, 0, (tablica.rozmiarX-1));
 				wyswietlKomunikat(53, adresX);
