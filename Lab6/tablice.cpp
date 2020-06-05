@@ -95,7 +95,7 @@ int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
 				tablica[x][y] = NULL;
 				//cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
 			}
-			cout << endl;
+			//cout << endl;
 		}
 		//Poniższe zakomentowałem gdyż w sumie oddzielna inicjalizacja w tej funkcji
 		//już nie jest potrzebna - konstruktory komórek je inicjalizują.
@@ -295,6 +295,7 @@ float Tablica::sredniaKolumny(int kolumna) {
 int Tablica::zapiszTablice(string nazwaPliku) {
 	ofstream plik;
 	plik.open(nazwaPliku.c_str()); //Konwersja nazwy pliku na c-string - wymaganie	funkcji open()
+	if(!plik.is_open()) return -1;
 	plik << rozmiarX << endl << rozmiarY << endl;
 	for(int x=0; x<rozmiarX; x++) {
 		plik << typyKolumn[x] << "\t";
@@ -330,7 +331,11 @@ int Tablica::otworzTablice(string nazwaPliku) {
 		if(typyKolumn != NULL) delete [] typyKolumn;
 		typyKolumn = new string[odczytano_kolumn];
 		for(int x=0; x<odczytano_kolumn; x++) {
-			dane >> typyKolumn[x];
+			string biezacyTyp;
+			dane >> biezacyTyp;
+			if(biezacyTyp == "int" || biezacyTyp == "string") {
+				typyKolumn[x] = biezacyTyp;
+			} else return -1;
 		}
 		this->utworzTablice(odczytano_kolumn, odczytano_wierszy, typyKolumn);
 		this->rozmiarX = odczytano_kolumn;
@@ -350,7 +355,7 @@ int Tablica::otworzTablice(string nazwaPliku) {
 				}
 			}
 		}
-		cout << endl;
+		//cout << endl;
 		dane.close();
 		return 0;
 	} else {

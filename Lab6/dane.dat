@@ -1,14 +1,13 @@
 4
 10
 string	string	string	int	
-Student	Tadeusz	Zawalon	253187
-Student	Boglarz	Fojar	253001
-Zdudend	Kazimierz Aansoja	255066
-Studentka	Katarzyna	Ósmann	505006
+Student	Tadeusz	Zawalon	253187	
+Student	Boglarz	Fojar	253001	
+Zdudend	Kazimierz	Aansoja	255066	
+Studentka	Katarzyna	Ósmann	505006	
 Profesor	Andrzej	Broda	330030	
-Profesor	Ryszard	Stelmap	200200
-Prowadzacy	Krzysztof	Majson	700600
-Inżynierz	Łukasz	Poloniusz	16008
-Prowadząca	Dorota	Abakus	730073
-Nauczyciel	Boglarz	Bajus	100340
-P.Profesor	Bożena	Bądzlik	087234
+Profesor	Ryszard	Stelmap	200200	
+Prowadzacy	Krzysztof	Majson	700600	
+Inżynierz	Łukasz	Poloniusz	16008	
+Prowadząca	Dorota	Abakus	730073	
+Nauczyciel	Boglarz	Bajus	100340	

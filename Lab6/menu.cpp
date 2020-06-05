@@ -29,6 +29,9 @@ void wyswietlMenu() {
 
 void wyswietlKomunikat(int nrKomunikatu, int opcjonalnaLiczba1 = -5, int opcjonalnaLiczba2 = -42, float opcjonalnaLiczba3 = 4.20) {
 	switch(nrKomunikatu) {
+		case -10:
+			cout << "Error! Niepowodzenie przy zapisywaniu pliku!" << endl;
+			break;
 		case -9:
 			cout << "Error. Podaj typ \"int\" albo \"string\": ";
 			break;
@@ -392,7 +395,8 @@ void uruchomMenu(Tablica tablica) {
 				string nazwaPliku;
 				wyswietlKomunikat(100);
 				cin >> nazwaPliku;
-				tablica.zapiszTablice(nazwaPliku);
+				int zwrot = tablica.zapiszTablice(nazwaPliku);
+				if(zwrot<0) wyswietlKomunikat(-10);
 				break;
 			}
 			case 14: {
