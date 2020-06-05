@@ -7,7 +7,7 @@ void wyswietlMenu() {
 	cout << endl;
 	cout << "Co chcesz zrobic?" << endl;
 	cout << "1. Utworz tablice" << endl;
-	cout << "2. Zmien typ i/lub zawartosc komorki tablicy" << endl;
+	cout << "2. Zmien zawartosc komorki tablicy" << endl;
 	cout << "3. Wyswietl tablice" << endl;
 	cout << "4. Zmien rozmiar tablicy" << endl;
 	cout << "5. Zsumuj wedlug wiersza" << endl;

@@ -85,14 +85,17 @@ int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
 		for(int y = 0; y<rozmiarY; y++) {
 			if(typyKolumn[x] == "int") {
 				tablica[x][y] = new KomorkaLiczbowa;
+				cout << "New KomorkaLiczbowa("<<x<<","<<y<<") at "<<tablica[x][y];
 				//cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << tablica[x] << endl;
 			} else if(typyKolumn[x] == "string") {
 				tablica[x][y] = new KomorkaTekstowa;
+				cout << "New KomorkaTekstowa("<<x<<","<<y<<") at "<<tablica[x][y];
 				//cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << tablica[x] << endl;
 			} else {
 				tablica[x][y] = NULL;
 				//cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
 			}
+			cout << endl;
 		}
 		//Poniższe zakomentowałem gdyż w sumie oddzielna inicjalizacja w tej funkcji
 		//już nie jest potrzebna - konstruktory komórek je inicjalizują.
@@ -145,10 +148,10 @@ int Tablica::wyswietlTablice(void) {
 	cout << rozmiarX << " kolumn na "; 
 	cout << rozmiarY << " wierszy:" << endl;
 	//cout << "Adres tablicy: "<<tablica<< " & =" << &tablica << endl;
-	for(int y=0; y<rozmiarX; y++) {
+	for(int y=0; y<rozmiarY; y++) {
 		//cout << "Adres kolumny "<<x<<". = "<< &tablica[x];
-		for(int x=0; x<rozmiarY; x++) {
-			//cout << &(tablica[x][y]) << " = ";
+		for(int x=0; x<rozmiarX; x++) {
+			cout << tablica[x][y] << " = ";
 			cout << tablica[x][y]->zwroc() << "\t";
 		}
 		cout << endl;
