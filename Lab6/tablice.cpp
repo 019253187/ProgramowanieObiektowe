@@ -201,10 +201,16 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 	}
 	//Usuniecie starej tablicy - zapobiezenie memleak
 	if(this->tablica != NULL) {
+		cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
 		for(int x=0; x<this->rozmiarX; x++) {
+			for(int y = 0; y<this->rozmiarX; y++) {
+				delete this->tablica[x][y];
+			}
 			delete [] this->tablica[x];
 		}
-		delete [] this->tablica;
+
+		delete [] tablica;
+		delete [] typyKolumn;
 	}
 
 	this->rozmiarX = nowyRozmiarX;
