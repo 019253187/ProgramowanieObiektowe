@@ -221,7 +221,9 @@ void uruchomMenu(Tablica tablica) {
 	int  wybranaOpcja = -13;
 	wyswietlKomunikat(0);
 	
-	while(wybranaOpcja<18) { 
+	while(wybranaOpcja<17) {
+		wyswietlMenu();
+		wybranaOpcja = pobierzInt(true, 1, 18);
 		switch(wybranaOpcja) {
 			case 1: {
 				wyswietlKomunikat(11);
@@ -423,11 +425,9 @@ void uruchomMenu(Tablica tablica) {
 				break;
 			}
 			default:
-				wyswietlKomunikat(-8);
+				//wyswietlKomunikat(-8);
 				break;
 		}
-		wyswietlMenu();
-		wybranaOpcja = pobierzInt(true, 1, 18);
 	}
 	wyswietlKomunikat(10);
 }

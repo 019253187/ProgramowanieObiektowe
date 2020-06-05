@@ -54,45 +54,53 @@ Tablica::Tablica() {
 	typyKolumn = NULL;
 }
 
-int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* typyKolumn) {
+int Tablica::utworzTablice(int rozmiarX, int rozmiarY, string* noweTypyKolumn) {
 	cout << "Tablica::utworzTablice():"<<endl;
 	if(this->tablica != NULL) {
 		cout << "!Usuwam stara tablice o adr." << &(this->tablica) << endl;
 		for(int x=0; x<this->rozmiarX; x++) {
+			for(int y = 0; y<this->rozmiarX; y++) {
+				delete this->tablica[x][y];
+			}
 			delete [] this->tablica[x];
 		}
 
-		delete [] this->tablica;
-		delete [] this->typyKolumn;
+		delete [] tablica;
+		delete [] typyKolumn;
 	}
 	this->rozmiarX = rozmiarX;
 	cout << "Ustawiono rozmiar X" << (this->rozmiarX) << " w " << &(this->rozmiarX) << endl;
 	this->rozmiarY = rozmiarY;
 	cout << "Ustawiono rozmiar Y" << (this->rozmiarY) << " w " << &(this->rozmiarY) << endl;
-	this->typyKolumn = new string[rozmiarX];
-	cout << "Stworzono nowa tablice typow kolumn o adr.: " << this->typyKolumn << endl; 
-	this->tablica = new Komorka*[rozmiarX];
-	cout << "Stworzono nowa tablice kolumn o adr.: " << this->tablica << endl; 
+	typyKolumn = new string[rozmiarX];
+	cout << "Stworzono nowa tablice typow kolumn o adr.: " << typyKolumn << endl; 
+	tablica = new Komorka**[rozmiarX];
+	cout << "Stworzono nowa tablice kolumn o adr.: " << tablica <<", & to " << &tablica << endl; 
 	for(int x=0; x<(this->rozmiarX); x++) {
-		this->tablica[x] = NULL;
-		this->typyKolumn[x] = typyKolumn[x];
+		cout << "tablica[" << x<<"] = " << tablica[x] << ", & =" << &tablica[x] << endl;
+		//tablica[x] = NULL;
+		typyKolumn[x] = noweTypyKolumn[x];
 		cout << "Ustawiono typ " << x << ". kolumny na " << this->typyKolumn[x] << endl;
-		if(typyKolumn[x] == "int") {
-			this->tablica[x] = new KomorkaLiczbowa[rozmiarY];
-			cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << &this->tablica[x] << endl;
-		} else if(typyKolumn[x] == "string") {
-			this->tablica[x] = new KomorkaTekstowa[rozmiarY];
-			cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << &this->tablica[x] << endl;
-		} else {
-			cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
+		tablica[x] = new Komorka*[rozmiarY];
+		for(int y = 0; y<rozmiarY; y++) {
+			if(typyKolumn[x] == "int") {
+				tablica[x][y] = new KomorkaLiczbowa;
+				cout << "Tworze kolumne liczbowa " << x << ". o adr.:" << tablica[x] << endl;
+			} else if(typyKolumn[x] == "string") {
+				tablica[x][y] = new KomorkaTekstowa;
+				cout << "Tworze kolumne tekstowa " << x << ". o adr.:" << tablica[x] << endl;
+			} else {
+				tablica[x][y] = NULL;
+				cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << x << "!";
+			}
 		}
 		//Poniższe zakomentowałem gdyż w sumie oddzielna inicjalizacja w tej funkcji
 		//już nie jest potrzebna - konstruktory komórek je inicjalizują.
 		/*for(int y=0; y<(this->rozmiarY); y++) {
 			if(this->typyKolumn[x] == "int") {
-				this->tablica[x][y].ustaw(0);
+				this->tablica[x][y]->ustaw(0);
 			} else if(this->typyKolumn[x] == "string") {
-				this->tablica[x][y].ustaw("nic");
+				this->tablica[x][y]->ustaw("nic");
 			}
 		}*/
 	}
@@ -110,7 +118,7 @@ int Tablica::zmienKomorke(int xKomorki, int yKomorki, int nowaZawartosc) {
 		return -3;
 	}
 
-	tablica[xKomorki][yKomorki].ustaw(nowaZawartosc);
+	tablica[xKomorki][yKomorki]->ustaw(nowaZawartosc);
 	return 0;
 }
 
@@ -125,7 +133,7 @@ int Tablica::zmienKomorke(int xKomorki, int yKomorki, string nowaZawartosc) {
 		return -3;
 	}
 
-	tablica[xKomorki][yKomorki].ustaw(nowaZawartosc);
+	tablica[xKomorki][yKomorki]->ustaw(nowaZawartosc);
 	return 0;
 }
 
@@ -136,18 +144,18 @@ int Tablica::wyswietlTablice(void) {
 	cout << "Oto twoja tablica o rozmiarze ";
 	cout << rozmiarX << " kolumn na "; 
 	cout << rozmiarY << " wierszy:" << endl;
-	cout << "Adres tablicy: " << &tablica << endl;
+	//cout << "Adres tablicy: "<<tablica<< " & =" << &tablica << endl;
 	for(int x=0; x<rozmiarX; x++) {
-		cout << "Adres kolumny "<<x<<". = "<<&tablica[x];
+		//cout << "Adres kolumny "<<x<<". = "<< &tablica[x];
 		for(int y=0; y<rozmiarY; y++) {
-			cout << &tablica[x][y] << " = ";
-			cout << tablica[x][y].zwroc() << "\t";
+			//cout << &(tablica[x][y]) << " = ";
+			cout << tablica[x][y]->zwroc() << "\t";
 		}
 		cout << endl;
 	}
 
 	for(int x = 0; x<rozmiarX; x++) {
-		cout << "Adres listy typow kolumn:" << typyKolumn << endl;
+		//cout << "Adres listy typow kolumn:" << typyKolumn << endl;
 		cout << typyKolumn[x] << "\t";
 	}
 	cout << endl;
@@ -176,13 +184,13 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 			if(typyKolumn[x] == "string") {
 				for(int y=0; y<nowyRozmiarY; y++) {
 					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
-						tabelka.tablica[x][y].ustaw(tablica[x][y].zwroc());
+						tabelka.tablica[x][y]->ustaw(tablica[x][y]->zwroc());
 					}
 				}
 			} else if(typyKolumn[x] == "int") {
 				for(int y=0; y<nowyRozmiarY; y++) {
 					if(y<rozmiarY) { //Zapobieżenie segfault(odczyt spoza tablicy)
-						tabelka.tablica[x][y].ustaw(tablica[x][y].zwrocInt());
+						tabelka.tablica[x][y]->ustaw(tablica[x][y]->zwrocInt());
 					}
 				}
 			} else {	
@@ -209,7 +217,7 @@ int Tablica::zmianaRozmiaru(int nowyRozmiarX, int nowyRozmiarY) {
 float Tablica::sumujWiersz(int wiersz) {
 	float suma = 0;
 	for(int x=0; x<rozmiarX; x++) {
-		suma += (float)tablica[x][wiersz].zwrocInt();
+		suma += (float)tablica[x][wiersz]->zwrocInt();
 	}
 	return suma;
 }
@@ -217,26 +225,26 @@ float Tablica::sumujWiersz(int wiersz) {
 float Tablica::sumujKolumne(int kolumna) {
 	float suma = 0;
 	for(int y=0; y<rozmiarY; y++) {
-		suma += (float)tablica[kolumna][y].zwrocInt();
+		suma += (float)tablica[kolumna][y]->zwrocInt();
 	}
 	return suma;
 }
 
 float Tablica::minimumWiersza(int wiersz) {
-	float minimum = (float) tablica[0][wiersz].zwrocInt();
+	float minimum = (float) tablica[0][wiersz]->zwrocInt();
 	for(int x=0; x<rozmiarX; x++) {
-		if(minimum > (float)tablica[x][wiersz].zwrocInt()) {
-			minimum =(float) tablica[x][wiersz].zwrocInt();;
+		if(minimum > (float)tablica[x][wiersz]->zwrocInt()) {
+			minimum =(float) tablica[x][wiersz]->zwrocInt();;
 		}
 	}
 	return minimum;
 }
 
 float Tablica::maksimumWiersza(int wiersz) {
-	float maksimum =(float) tablica[0][wiersz].zwrocInt();
+	float maksimum =(float) tablica[0][wiersz]->zwrocInt();
 	for(int x=0; x<rozmiarX; x++) {
-		if(maksimum < (float)tablica[x][wiersz].zwrocInt()) {
-			maksimum =(float) tablica[x][wiersz].zwrocInt();
+		if(maksimum < (float)tablica[x][wiersz]->zwrocInt()) {
+			maksimum =(float) tablica[x][wiersz]->zwrocInt();
 		}
 	}
 	return maksimum;
@@ -249,20 +257,20 @@ float Tablica::sredniaWiersza(int wiersz) {
 }
 
 float Tablica::minimumKolumny(int kolumna) {
-	float minimum = (float)tablica[kolumna][0].zwrocInt();
+	float minimum = (float)tablica[kolumna][0]->zwrocInt();
 	for(int y=0; y<rozmiarY; y++) {
-		if(minimum > (float)tablica[kolumna][y].zwrocInt()) {
-			minimum = (float)tablica[kolumna][y].zwrocInt();
+		if(minimum > (float)tablica[kolumna][y]->zwrocInt()) {
+			minimum = (float)tablica[kolumna][y]->zwrocInt();
 		}
 	}
 	return minimum;
 }
 
 float Tablica::maksimumKolumny(int kolumna) {
-	float maksimum = (float)tablica[kolumna][0].zwrocInt();
+	float maksimum = (float)tablica[kolumna][0]->zwrocInt();
 	for(int y=0; y<rozmiarY; y++) {
-		if(maksimum < (float)tablica[kolumna][y].zwrocInt()) {
-			maksimum = (float)tablica[kolumna][y].zwrocInt();
+		if(maksimum < (float)tablica[kolumna][y]->zwrocInt()) {
+			maksimum = (float)tablica[kolumna][y]->zwrocInt();
 		}
 	}
 	return maksimum;
@@ -285,7 +293,7 @@ int Tablica::zapiszTablice(string nazwaPliku) {
 
 	for(int x=0; x<rozmiarX; x++) {
 		for(int y=0; y<rozmiarY; y++) {
-			plik << tablica[x][y].zwroc() << "\t";
+			plik << tablica[x][y]->zwroc() << "\t";
 		}
 		plik << endl;
 	}
@@ -321,13 +329,13 @@ int Tablica::otworzTablice(string nazwaPliku) {
 				if(typyKolumn[x] == "int") {
 					int biezacaKomorka;
 					dane >> biezacaKomorka;
-					tablica[x][y].ustaw(biezacaKomorka);
+					tablica[x][y]->ustaw(biezacaKomorka);
 				}
 
 				if(typyKolumn[x] == "string") {
 					string biezacaKomorka;
 					dane >> biezacaKomorka;
-					tablica[x][y].ustaw(biezacaKomorka);
+					tablica[x][y]->ustaw(biezacaKomorka);
 				}
 			}
 		}
@@ -342,21 +350,31 @@ int Tablica::otworzTablice(string nazwaPliku) {
 }
 
 int Tablica::zmienTypKolumny(int kolumna, std::string nowyTyp) {
-	if(tablica[kolumna] != NULL) delete [] tablica[kolumna];
-	tablica[kolumna] = NULL;
-	if(nowyTyp == "int") {
-		tablica[kolumna] = new KomorkaLiczbowa[rozmiarY];
-	} else if(nowyTyp == "string") {
-		tablica[kolumna] = new KomorkaTekstowa[rozmiarY];
-	} else {
-		return -1;
+	if(this->tablica[kolumna] != NULL) {
+		for(int y = 0; y<this->rozmiarX; y++) {
+				delete this->tablica[kolumna][y];
+		}
+		delete [] this->tablica[kolumna];
 	}
+	this->tablica[kolumna] = new Komorka*[rozmiarY];
+		for(int y = 0; y<rozmiarY; y++) {
+			if(nowyTyp == "int") {
+				tablica[kolumna][y] = new KomorkaLiczbowa;
+				cout << "Zmieniam typ kolumny " << kolumna << ". na liczbowa adr.:" << tablica[kolumna] << endl;
+			} else if(nowyTyp == "string") {
+				tablica[kolumna][y] = new KomorkaTekstowa;
+				cout << "Zmieniam typ kolumny " << kolumna << ". na tekstowa o adr.:" << tablica[kolumna] << endl;
+			} else {
+				tablica[kolumna][y] = NULL;
+				cout << "UWAGA! Podano nieznany typ zmiennej dla kolumny" << kolumna << "!";
+			}
+		}
 	typyKolumn[kolumna] = nowyTyp;
 	for(int y=0; y<rozmiarY; y++) {
 		if(nowyTyp == "int") {
-			tablica[kolumna][y].ustaw(0);
+			tablica[kolumna][y]->ustaw(0);
 		} else if(nowyTyp == "string") {
-			tablica[kolumna][y].ustaw("nic");
+			tablica[kolumna][y]->ustaw("nic");
 		}
 	}
 	return 0;

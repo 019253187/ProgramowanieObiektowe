@@ -7,6 +7,10 @@
  * @brief Klasa podstawowa dla poszczegolnych rodzajow Komorek
  *
  */
+
+#define TYP_INT = 1;
+#define TYP_STRING = 2;
+
 class Komorka {
 public:
 	virtual int ustaw(int wartosc) = 0;
@@ -52,7 +56,7 @@ private:
 /**@class Tablica
  * @brief Klasa sluzaca do wygodnego przechowywania i obslugi tablic
  * @var Tablica::tablica
- * Wlasciwa, dwuwymiarowa tablica typu int(wskaznik wskaznika)
+ * Wlasciwa, dwuwymiarowa tablica wskaznikow do obiektów Komorka
  * @var Tablica::rozmiarX
  * Ilosc kolumn w calej tablicy
  * @var Tablica::rozmiarY
@@ -62,7 +66,7 @@ private:
  */
 class Tablica {
 public:
-	Komorka** tablica;
+	Komorka*** tablica;
 	int rozmiarX;
 	int rozmiarY;
 	std::string* typyKolumn;
@@ -75,7 +79,7 @@ public:
 	 * @param rozmiarY ilosc wierszy
 	 * @return 0 lub kod błędu
 	 */
-	int utworzTablice(int rozmiarX, int rozmiarY, std::string typyKolumn[]);
+	int utworzTablice(int rozmiarX, int rozmiarY, std::string* noweTypyKolumn);
 
 	/**
 	 * Zmienia zawartosc wybranej komorki w tablicy.
